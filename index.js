@@ -1,6 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var mainRouter = require("./mainRoutes.js");
+
 var app = express();
 
 app.use("/cdn", express.static("public"));

@@ -12,7 +12,9 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "opentsdb": "^0.5.7"
+    "opentsdb": "^0.5.7",
+    "opentsdb-client": "0.0.4",
+    "opentsdb-mquery": "0.0.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
