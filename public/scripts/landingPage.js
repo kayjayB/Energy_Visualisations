@@ -18,10 +18,6 @@ $(document).ready(function() {
 
     var x = d3.scaleTime()
         .rangeRound([0, width]);
-    var x2 = d3.scaleTime()
-        .rangeRound([0, width]);
-
-    var xAxis2 = d3.axisBottom(x2); // xAxis for brush slider
 
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
@@ -31,19 +27,6 @@ $(document).ready(function() {
         .y(function(d) { return y(d.WITS_WC_Barnato_Sub_Residence_A___D_kWh); });
 
     var parseTime = d3.timeParse("%Y-%m-%d %H:%M");
-    var bisectDate = d3.bisector(function(d) { return d.date; }).left;
-
-    var context = svg.append("g") // Brushing context box container
-        .attr("transform", "translate(" + 0 + "," + 410 + ")")
-        .attr("class", "context");
-
-    //append clip path for lines plotted, hiding those part out of bounds
-    svg.append("defs")
-        .append("clipPath")
-        .attr("id", "clip")
-        .append("rect")
-        .attr("width", width)
-        .attr("height", height);
 
     d3.csv("/cdn/scripts/WITS_WC_Barnato_Sub_Residence_A___D_kWh.csv").then(function(d) {
         console.log(d[0]);
@@ -71,41 +54,6 @@ $(document).ready(function() {
             .attr("dy", "0.71em")
             .attr("text-anchor", "end")
             .text("Energy (kWh)");
-
-        // //for slider part-----------------------------------------------------------------------------------
-
-        // var brush = d3.brushX()
-        //     .extent([
-        //         [0, 0],
-        //         [width, height]
-        //     ])
-        //     .on("brush", brushed);
-
-        // context.append("g") // Create brushing xAxis
-        //     .attr("class", "x axis1")
-        //     .attr("transform", "translate(0," + height2 + ")")
-        //     .call(xAxis2);
-
-        // var contextArea = d3.svg.area() // Set attributes for area chart in brushing context graph
-        //     .interpolate("monotone")
-        //     .x(function(d) { return x2(d.ValueTimestamp); }) // x is scaled to xScale2
-        //     .y0(height2) // Bottom line begins at height2 (area chart not inverted) 
-        //     .y1(0); // Top line of area, 0 (area chart not inverted)
-
-        // //plot the rect as the bar at the bottom
-        // context.append("path") // Path is created using svg.area details
-        //     .attr("class", "area")
-        //     .attr("d", contextArea(categories[0].values)) // pass first categories data .values to area path generator 
-        //     .attr("fill", "#F1F1F2");
-
-        // //append the brush for the selection of subsection  
-        // context.append("g")
-        //     .attr("class", "x brush")
-        //     .call(brush)
-        //     .selectAll("rect")
-        //     .attr("height", height2) // Make brush rects same height 
-        //     .attr("fill", "#E6E7E8");
-        // //end slider part----------------------------------------------------------------------------------
 
         g.append("path")
             .datum(d)
