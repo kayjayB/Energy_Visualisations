@@ -38,5 +38,6 @@ module.exports = {
         "no-useless-escape": "off",
         "no-control-regex": "off",
         "no-unused-vars": "off",
+        "no-undef": "off"
     }
 };
