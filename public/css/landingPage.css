@@ -1,110 +1,128 @@
-.navbar-default {
-    background-color: #40e0d0;
-    -webkit-box-shadow: 0px 7px 10px 3px rgba(202, 227, 230, 1);
-    -moz-box-shadow: 0px 7px 10px 3px rgba(202, 227, 230, 1);
-    box-shadow: 0px 7px 10px 3px rgba(202, 227, 230, 1);
-}
-
-.main {
-    margin-top: 50px;
-}
-
-.navbar .nav {
-    float: right;
-}
-
-.fa-shopping-cart {
-    color: #0366ff;
-}
-
-#site-title {
-    font-size: 25px;
-    color: #ffffff;
-}
-
-#navigateToLink {
-    margin-top: 15px;
-}
-
-hr.hr-style {
-    border-top: 3px double #8c8b8b;
-}
-
-.navbar {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.btn-primary:active:hover,
-.btn-primary.active:hover,
-.open>.dropdown-toggle.btn-primary:hover,
-.btn-primary:active:focus,
-.btn-primary.active:focus,
-.open>.dropdown-toggle.btn-primary:focus,
-.btn-primary:active.focus,
-.btn-primary.active.focus,
-.open>.dropdown-toggle.btn-primary.focus,
-.btn-primary:hover {
-    background-color: #40e0d0;
-    color: #fafafa;
-    border: none;
-}
-
-.textStyle {
-    font-size: 30px;
-    color: #40e0d0;
-}
-
-.sidenav {
-    background-color: #40e0d0;
-    border-color: #f2f2f2;
-    padding-right: 50px;
-}
-
-.sidenav a {
-    float: left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 2px;
-    text-decoration: none;
-}
-
-.sidenav a:hover {
-    background-color: #f2f2f2;
-    color: #40e0d0;
-    ;
-}
-
-
-/* .sidenav {
-    height: 100%;
-    width: 180px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
-.sidenav a {
-    padding: 6px 6px 6px 32px;
-    text-decoration: none;
-    font-size: 15px;
-    color: #818181;
-    display: block;
-}
-
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.main {
-    margin-left: 200px;
-    /* Same as the width of the sidenav */
-
-
-/*
-}
-*/
+    .navbar-default {
+        background-color: #22419b;
+        -webkit-box-shadow: 0px 7px 10px 3px rgba(202, 227, 230, 1);
+        -moz-box-shadow: 0px 7px 10px 3px rgba(202, 227, 230, 1);
+        box-shadow: 0px 7px 10px 3px rgba(202, 227, 230, 1);
+    }
+    
+    .main {
+        margin-top: 50px;
+    }
+    
+    .navbar .nav {
+        float: right;
+    }
+    
+    #site-title {
+        font-size: 25px;
+        color: #ffffff;
+    }
+    
+    #navigateToLink {
+        margin-top: 15px;
+    }
+    
+    hr.hr-style {
+        border-top: 3px double #8c8b8b;
+    }
+    
+    .navbar {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    
+    .btn-primary:active:hover,
+    .btn-primary.active:hover,
+    .open>.dropdown-toggle.btn-primary:hover,
+    .btn-primary:active:focus,
+    .btn-primary.active:focus,
+    .open>.dropdown-toggle.btn-primary:focus,
+    .btn-primary:active.focus,
+    .btn-primary.active.focus,
+    .open>.dropdown-toggle.btn-primary.focus,
+    .btn-primary:hover {
+        background-color: #22419b;
+        color: #fafafa;
+        border: none;
+    }
+    
+    .textStyle {
+        font-size: 30px;
+        color: #40e0d0;
+    }
+    
+    .sidenav {
+        background-color: #22419b;
+        border-color: #f2f2f2;
+    }
+    
+    .sidenav a {
+        float: left;
+        color: #fafafa !important;
+        text-align: center;
+        padding: 14px 2px;
+        text-decoration: none !important;
+    }
+    
+    .sidenav a:hover {
+        background-color: #f2f2f2;
+        color: #40e0d0;
+    }
+    
+    .navbar-default .navbar-toggle:hover,
+    .navbar-default .navbar-toggle:focus {
+        background-color: #fafafa;
+    }
+    
+    .axis path,
+    .axis line,
+    .axis1 path,
+    .axis1 line {
+        fill: none;
+        stroke: #E6E7E8;
+        shape-rendering: crispEdges;
+    }
+    
+    .x.axis path,
+    .x.axis1 path {
+        display: none;
+    }
+    
+    .line {
+        fill: none;
+        stroke-width: 1.5px;
+    }
+    
+    .legend-box {
+        cursor: pointer;
+    }
+    
+    #mouse-tracker {
+        stroke: #E6E7E8;
+        stroke-width: 1px;
+    }
+    
+    .hover-line {
+        stroke: #E6E7E8;
+        fill: none;
+        stroke-width: 1px;
+        left: 10px;
+        shape-rendering: crispEdges;
+        opacity: 1e-6;
+    }
+    
+    .hover-text {
+        stroke: none;
+        font-size: 30px;
+        font-weight: bold;
+        fill: #000000;
+    }
+    
+    .tooltip {
+        font-weight: normal;
+    }
+    
+    .brush .extent {
+        stroke: #FFF;
+        shape-rendering: crispEdges;
+    }
