@@ -37,6 +37,8 @@ mainRouter.post('/getData', function(req, res) {
                 console.error(JSON.stringify(error));
                 return;
             }
+            // console.log(JSON.stringify(data));
+
             res.send(data);
         });
 });

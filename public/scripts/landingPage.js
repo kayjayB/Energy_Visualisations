@@ -1,6 +1,14 @@
+var d;
 $(document).ready(function() {
-    console.log("Ready freddy")
 
+    var end = ('2018/09/01 00:00');
+    var start = ('2017/08/30 00:00');
+    var metric = 'WITS_13_Jubilee_Road_kVarh';
+
+    getData(metric, start, end);
+});
+
+function drawLineGraph(JSONresponse) {
     var margin = { top: 20, right: 20, bottom: 110, left: 40 },
         margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
         width = 700 - margin.left - margin.right,
@@ -48,97 +56,79 @@ $(document).ready(function() {
         .on("brush", brushed);
 
     var line = d3.line()
-        .x(function(d) { return x(d.ValueTimestamp); })
-        .y(function(d) { return y(d.WITS_WC_Barnato_Sub_Residence_A___D_kWh); });
+        .x(function(d) { return x(d[0]); })
+        .y(function(d) { return y(d[1]); });
     var line2 = d3.line()
-        .x(function(d) { return x2(d.ValueTimestamp); })
-        .y(function(d) { return y2(d.WITS_WC_Barnato_Sub_Residence_A___D_kWh); });
+        .x(function(d) { return x2(d[0]); })
+        .y(function(d) { return y2(d[1]); });
 
-    var parseTime = d3.timeParse("%Y-%m-%d %H:%M");
+    d = JSONresponse;
+    d = d[0].dps;
 
-    d3.csv("/cdn/scripts/WITS_WC_Barnato_Sub_Residence_A___D_kWh.csv").then(function(d) {
-        console.log(d[0]);
+    x.domain(d3.extent(d, function(data) { return data[0]; }));
+    y.domain(d3.extent(d, function(data) { return data[1]; }));
 
-        d.forEach(function(data) {
-            data.ValueTimestamp = parseTime(data.ValueTimestamp);
-            //console.log(data.ValueTimestamp);
-            data.WITS_WC_Barnato_Sub_Residence_A___D_kWh = +data.WITS_WC_Barnato_Sub_Residence_A___D_kWh; // Use the + operator as a type conversion
-            //console.log(data.WITS_WC_Barnato_Sub_Residence_A___D_kWh);
-        });
-
-        x.domain(d3.extent(d, function(data) { return data.ValueTimestamp; }));
-        y.domain(d3.extent(d, function(data) { return data.WITS_WC_Barnato_Sub_Residence_A___D_kWh; }));
-        x2.domain(x.domain());
-        y2.domain(y.domain());
+    x2.domain(x.domain());
+    y2.domain(y.domain());
 
 
-        focus.append("path")
-            .datum(d)
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-linejoin", "round")
-            .attr("stroke-linecap", "round")
-            .attr("stroke-width", 1.5)
-            .attr("class", "line")
-            .attr("d", line);
+    focus.append("path")
+        .datum(d)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 1.5)
+        .attr("class", "line")
+        .attr("d", line);
 
-        focus.append("g")
-            .attr("class", "axis axis--x")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
+    focus.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
 
-        focus.append("g")
-            .attr("class", "axis axis--y")
-            .call(yAxis);
-        // g.append("g")
-        //     .attr("transform", "translate(0," + height + ")")
-        //     .call(d3.axisBottom(x))
-        focus.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left)
-            .attr("x", 0 - (height / 2))
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .text("Energy (kWh)");
+    focus.append("g")
+        .attr("class", "axis axis--y")
+        .call(yAxis);
 
-        svg.append("text")
-            .attr("transform",
-                "translate(" + ((width + margin.right + margin.left) / 2) + " ," +
-                (height + margin.top + margin.bottom) + ")")
-            .style("text-anchor", "middle")
-            .text("Date");
+    focus.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Energy (kWh)");
 
-        context.append("path")
-            .datum(d)
-            .attr("class", "line")
-            .attr("d", line2)
+    svg.append("text")
+        .attr("transform",
+            "translate(" + ((width + margin.right + margin.left) / 2) + " ," +
+            (height + margin.top + margin.bottom) + ")")
+        .style("text-anchor", "middle")
+        .text("Date");
 
-        context.append("g")
-            .attr("class", "axis axis--x")
-            .attr("transform", "translate(0," + height2 + ")")
-            .call(xAxis2);
+    context.append("path")
+        .datum(d)
+        .attr("class", "line")
+        .attr("d", line2)
 
-        context.append("g")
-            .attr("class", "brush")
-            .call(brush)
-            .call(brush.move, x.range());
+    context.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(xAxis2);
 
-    });
+    context.append("g")
+        .attr("class", "brush")
+        .call(brush)
+        .call(brush.move, x.range());
 
     function brushed() {
         var selection = d3.event.selection;
         x.domain(selection.map(x2.invert, x2));
         focus.selectAll(".line").attr("d", line);
-        // .attr("cx", function(d) { return x(d.ValueTimestamp); })
-        //     .attr("cy", function(d) { return y(d.WITS_WC_Barnato_Sub_Residence_A___D_kWh); });
         focus.select(".axis--x").call(d3.axisBottom(x));
     }
 
-    var end = ('2018/09/01 00:00');
-    var start = ('2018/08/30 00:00');
-    var metric = 'WITS_13_Jubilee_Road_kVarh';
-    getData(metric, start, end);
-});
+}
 
 function makeResponsive(svg) {
     var container = d3.select(svg.node().parentNode),
@@ -204,6 +194,8 @@ function getData(loggerName, startDate, endDate) {
         async: true,
         success: function(resp) {
             console.log(resp);
+            // return data;
+            drawLineGraph(resp);
         }
     });
 }
