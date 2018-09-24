@@ -9,7 +9,8 @@ $(document).ready(function() {
 
     var svg = d3.select('#my-visualisation').append('svg')
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
+        .attr("height", height + margin.top + margin.bottom)
+        .call(makeResponsive);
 
     svg.append("defs").append("clipPath")
         .attr("id", "clip")
@@ -122,15 +123,6 @@ $(document).ready(function() {
             .call(brush)
             .call(brush.move, x.range());
 
-        // g.append("g")
-        //     .call(d3.axisLeft(y))
-        //     .append("text")
-        //     .attr("fill", "#000")
-        //     .attr("transform", "rotate(-90)")
-        //     .attr("y", 6)
-        //     .attr("dy", "0.71em")
-        //     .attr("text-anchor", "end")
-        //     .text("Energy (kWh)");
     });
 
     function brushed() {
@@ -143,3 +135,22 @@ $(document).ready(function() {
     }
 
 });
+
+function makeResponsive(svg) {
+    var container = d3.select(svg.node().parentNode),
+        width = parseInt(svg.style("width")),
+        height = parseInt(svg.style("height")),
+        aspectRatio = width / height;
+
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+        .attr("preserveAspectRatio", "xMinYMid")
+        .call(resize);
+
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+        var targetWidth = parseInt(container.style("width"));
+        svg.attr("width", targetWidth);
+        svg.attr("height", Math.round(targetWidth / aspectRatio));
+    }
+}
