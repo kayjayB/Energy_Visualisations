@@ -1,11 +1,11 @@
 $(document).ready(function() {
     console.log("Ready freddy")
 
-    var margin = { top: 20, right: 20, bottom: 110, left: 50 },
-        margin2 = { top: 430, right: 20, bottom: 30, left: 40 },
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom,
-        height2 = 500 - margin2.top - margin2.bottom;
+    var margin = { top: 20, right: 20, bottom: 110, left: 40 },
+        margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
+        width = 700 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom,
+        height2 = 400 - margin2.top - margin2.bottom;
 
     var svg = d3.select('#my-visualisation').append('svg')
         .attr("width", width + margin.left + margin.right)
@@ -148,37 +148,39 @@ function makeResponsive(svg) {
 
     d3.select(window).on("resize." + container.attr("id"), resize);
 
+
     function resize() {
         var targetWidth = parseInt(container.style("width"));
         svg.attr("width", targetWidth);
         svg.attr("height", Math.round(targetWidth / aspectRatio));
     }
-    // Nav bar stuff
-    // Hide submenus
-    $('#body-row .collapse').collapse('hide');
+}
+// Nav bar stuff
+// Hide submenus
+$('#body-row .collapse').collapse('hide');
+
+// Collapse/Expand icon
+$('#collapse-icon').addClass('fa-angle-double-left');
+
+// Collapse click
+$('[data-toggle=sidebar-colapse]').click(function() {
+    SidebarCollapse();
+});
+
+function SidebarCollapse() {
+    $('.menu-collapsed').toggleClass('d-none');
+    $('.sidebar-submenu').toggleClass('d-none');
+    $('.submenu-icon').toggleClass('d-none');
+    $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
+
+    // Treating d-flex/d-none on separators with title
+    var SeparatorTitle = $('.sidebar-separator-title');
+    if (SeparatorTitle.hasClass('d-flex')) {
+        SeparatorTitle.removeClass('d-flex');
+    } else {
+        SeparatorTitle.addClass('d-flex');
+    }
 
     // Collapse/Expand icon
-    $('#collapse-icon').addClass('fa-angle-double-left');
-
-    // Collapse click
-    $('[data-toggle=sidebar-colapse]').click(function() {
-        SidebarCollapse();
-    });
-
-    function SidebarCollapse() {
-        $('.menu-collapsed').toggleClass('d-none');
-        $('.sidebar-submenu').toggleClass('d-none');
-        $('.submenu-icon').toggleClass('d-none');
-        $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
-
-        // Treating d-flex/d-none on separators with title
-        var SeparatorTitle = $('.sidebar-separator-title');
-        if (SeparatorTitle.hasClass('d-flex')) {
-            SeparatorTitle.removeClass('d-flex');
-        } else {
-            SeparatorTitle.addClass('d-flex');
-        }
-
-        // Collapse/Expand icon
-        $('#collapse-icon').toggleClass('fa-angle-double-left fa-angle-double-right');
-    }
+    $('#collapse-icon').toggleClass('fa-angle-double-left fa-angle-double-right');
+}
