@@ -11,31 +11,87 @@
     <script src="/cdn/libraries/bootstrap.min.js"></script>
     <script src="/cdn/libraries/d3.min.js"></script>
     <script src="/cdn/scripts/landingPage.js"></script>
-
 </head>
 
 <body>
-    <div>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>                        
-                </button>
-                    <!-- <a href="#" class="navbar-left"><img src="Logo.pdf"></a> -->
-                    <a class="navbar-brand" id="site-title" href="#">ENERGY VISUALISATIONS</a>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="sidenav"><a class="nav-link" onclick="report()" href="#"><i class="fa fa-flag" aria-hidden="true"></i>  Report resource wastage</a></li>
-                    </ul>
+    <!-- <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" id="site-title" href="#">ENERGY VISUALISATIONS</a>
+            </div>
+        </div>
+    </nav> -->
+    <!-- Bootstrap NavBar -->
+    <nav class="navbar navbar-default navbar-expand-md fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+            <span class="site-title menu-collapsed">ENERGY VISUALISATIONS</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown d-sm-block d-md-none">
+                    <a class="nav-link" href="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Visualisation 1
+                    </a>
+                    <a class="nav-link" href="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Visualisation 2
+                    </a>
+                    <a class="nav-link" href="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Visualisation 3
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <!-- NavBar END -->
+
+
+    <!-- Bootstrap row -->
+    <div class="row" id="body-row">
+        <!-- Sidebar -->
+        <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+            <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
+            <!-- Bootstrap List Group -->
+            <ul class="list-group sticky-top sticky-offset">
+                <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+                    <small>Dashboard</small>
+                </li>
+                <a href="#" class="sidenavStyle list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-start align-items-center">
+                        <span class="fa fa-calendar fa-fw mr-3"></span>
+                        <span class="menu-collapsed">Visualisation 1</span>
+                    </div>
+                </a>
+                <a href="#" class="sidenavStyle list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-start align-items-center">
+                        <span class="fa fa-calendar fa-fw mr-3"></span>
+                        <span class="menu-collapsed">Visualisation 2</span>
+                    </div>
+                </a>
+                <a href="#" class="sidenavStyle list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-start align-items-center">
+                        <span class="fa fa-calendar fa-fw mr-3"></span>
+                        <span class="menu-collapsed">Visualisation 3</span>
+                    </div>
+                </a>
+
+            </ul>
+            <!-- List Group END-->
+        </div>
+
+        <!-- sidebar-container END -->
+        <div class="col py-3">
+            <div id="content">
+                <div class="container-fluid">
+                    <div id="my-visualisation"></div>
                 </div>
             </div>
-        </nav>
+        </div>
     </div>
-    <div id="my-visualisation"></div>
 </body>
 
 </html>
