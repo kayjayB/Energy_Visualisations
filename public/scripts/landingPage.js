@@ -134,6 +134,10 @@ $(document).ready(function() {
         focus.select(".axis--x").call(d3.axisBottom(x));
     }
 
+    var end = ('2018/09/01 00:00');
+    var start = ('2018/08/30 00:00');
+    var metric = 'WITS_13_Jubilee_Road_kVarh';
+    getData(metric, start, end);
 });
 
 function makeResponsive(svg) {
@@ -183,4 +187,23 @@ function SidebarCollapse() {
 
     // Collapse/Expand icon
     $('#collapse-icon').toggleClass('fa-angle-double-left fa-angle-double-right');
+}
+
+function getData(loggerName, startDate, endDate) {
+    var payload = {
+        loggerName: loggerName,
+        startDate: startDate,
+        endDate: endDate
+    };
+    $.ajax({
+        url: "/getData",
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        data: JSON.stringify(payload),
+        async: true,
+        success: function(resp) {
+            console.log(resp);
+        }
+    });
 }
