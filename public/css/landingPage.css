@@ -128,3 +128,14 @@ body {
 .nav-link {
     color: white;
 }
+
+.navbar {
+    text-align: center;
+    width: 100%;
+}
+
+.navbar .navbar-brand {
+    display: inline-block;
+    float: none;
+    vertical-align: top;
+}
