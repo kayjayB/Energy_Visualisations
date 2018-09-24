@@ -5,7 +5,7 @@ var express = require("express");
 var client = require('opentsdb-client')(),
     mQuery = require('opentsdb-mquery')(),
     end = ('2018/09/01 00:00'),
-    start = ('2013/01/01 00:00');
+    start = ('2018/08/30 00:00');
 
 client.host('35.240.2.119');
 client.port(4242);
@@ -18,7 +18,7 @@ mainRouter.get('/', function(req, res) {
 
 mQuery
     .aggregator('sum')
-    .downsample('5m-avg')
+    .downsample('1h-avg') // Average datapoints hourly to limit the number of points being returned
     .rate(false)
     .metric('WITS_13_Jubilee_Road_kVarh')
     .tags('DataLoggerName', 'WITS_13_Jubilee_Road_kVarh');
@@ -32,7 +32,6 @@ client
     .end(end)
     .queries(mQuery)
     .get(function onData(error, data) {
-        console.log("in func")
         if (error) {
             console.error(JSON.stringify(error));
             return;
