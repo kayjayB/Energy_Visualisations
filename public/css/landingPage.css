@@ -139,3 +139,18 @@ body {
     float: none;
     vertical-align: top;
 }
+
+.active {
+    stroke: #000;
+    stroke-width: 2px;
+}
+
+.circle {
+    pointer-events: all;
+    stroke: none;
+    stroke-width: 20px;
+}
+
+text {
+    pointer-events: none;
+}

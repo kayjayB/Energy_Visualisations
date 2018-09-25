@@ -16,27 +16,31 @@ mainRouter.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'views', 'landingPage.html'));
 });
 
-mQuery
-    .aggregator('sum')
-    .downsample('1h-avg') // Average datapoints hourly to limit the number of points being returned
-    .rate(false)
-    .metric('WITS_13_Jubilee_Road_kVarh')
-    .tags('DataLoggerName', 'WITS_13_Jubilee_Road_kVarh');
+mainRouter.post('/getData', function(req, res) {
+    mQuery
+        .aggregator('sum')
+        .downsample('1h-avg') // Average datapoints hourly to limit the number of points being returned
+        .rate(false)
+        .metric(req.body.loggerName)
+        .tags('DataLoggerName', req.body.loggerName);
 
-client
-    .ms(true)
-    .arrays(true)
-    .tsuids(false)
-    .annotations('none')
-    .start(start)
-    .end(end)
-    .queries(mQuery)
-    .get(function onData(error, data) {
-        if (error) {
-            console.error(JSON.stringify(error));
-            return;
-        }
-        console.log(JSON.stringify(data));
-    });
+    client
+        .ms(true)
+        .arrays(true)
+        .tsuids(false)
+        .annotations('none')
+        .start(req.body.startDate)
+        .end(req.body.endDate)
+        .queries(mQuery)
+        .get(function onData(error, data) {
+            if (error) {
+                console.error(JSON.stringify(error));
+                return;
+            }
+            // console.log(JSON.stringify(data));
+
+            res.send(data);
+        });
+});
 
 module.exports = mainRouter;
