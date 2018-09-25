@@ -1,6 +1,6 @@
 {
     "children": [
-        { "name": "Graph 1", "address": "#" },
+        { "name": "Graph 1", "address": "/visualisation1" },
         { "name": "Graph 2", "address": "#" },
         { "name": "Graph 3", "address": "#" },
         { "name": "Graph 4", "address": "#" },
