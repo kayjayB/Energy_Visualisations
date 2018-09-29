@@ -12,12 +12,38 @@ $(document).ready(function() {
     var start = ('2017/08/30 00:00');
     var metric = 'WITS_13_Jubilee_Road_kVarh';
 
-    getData(metric, start, end);
+    getMetrics();
 });
+
+function getMetrics() {
+    $.ajax({
+        url: "/getAllMetrics",
+        type: "GET",
+        contentType: "application/json",
+        processData: false,
+        async: true,
+        success: function(resp) {
+            createDropdown(resp);
+        }
+    });
+}
+
+function createDropdown(Metrics) {
+    let dropdownContainer = document.getElementById("buildingDropdown");
+
+    for (let i = 0; i < Metrics.length; i++) {
+        let link = document.createElement("a");
+        link.className = "dropdownLink";
+        link.id = "dropdownLink_" + i.toString();
+        link.innerHTML = Metrics[i];
+
+        dropdownContainer.appendChild(link);
+    }
+}
 
 function drawLineGraph(JSONresponse) {
 
-    var svg = d3.select('#my-visualisation').append('svg')
+    var svg = d3.select('#visualisation2').append('svg')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .call(makeResponsive);
@@ -167,8 +193,27 @@ function getData(loggerName, startDate, endDate) {
         async: true,
         success: function(resp) {
             // console.log(resp);
-            // return data;
+            // return data;'
             drawLineGraph(resp);
         }
     });
+}
+
+function myFunction() {
+    document.getElementById("buildingDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
 }
