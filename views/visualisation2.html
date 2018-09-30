@@ -86,23 +86,32 @@
         </div>
 
         <div class="col py-3">
-            <div class="dropdown">
-                <button onclick="buildings()" class="dropbtn">Residence</button>
-                <div id="buildingDropdown" class="dropdown-content">
+            <div class="row">
+                <div class="col-sm-4">
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="dropdown">
+                        <button onclick="buildings()" class="dropbtn btn btn-outline-primary">Residence</button>
+                        <div id="buildingDropdown" class="dropdown-content">
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button onclick="years()" class="dropbtn btn btn-outline-primary">Years</button>
+                        <div id="yearDropdown" class="dropdown-content2">
+                            <input type="checkbox" id="2013" value="2013">2013<br>
+                            <input type="checkbox" id="2014" value="2014">2014<br>
+                            <input type="checkbox" id="2015" value="2015">2015<br>
+                            <input type="checkbox" id="2016" value="2016">2016<br>
+                            <input type="checkbox" id="2017" value="2017">2017<br>
+                            <input type="checkbox" id="2018" value="2018">2018<br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <button onclick="submitParameters()" type="button" class="btn btn-outline-primary">Draw my graph</button>
                 </div>
             </div>
-            <div class="dropdown">
-                <button onclick="years()" class="dropbtn">Years</button>
-                <div id="yearDropdown" class="dropdown-content2">
-                    <input type="checkbox" id="2013" value="2013">2013<br>
-                    <input type="checkbox" id="2014" value="2014">2014<br>
-                    <input type="checkbox" id="2015" value="2015">2015<br>
-                    <input type="checkbox" id="2016" value="2016">2016<br>
-                    <input type="checkbox" id="2017" value="2017">2017<br>
-                    <input type="checkbox" id="2018" value="2018">2018<br>
-                </div>
-            </div>
-            <button onclick="submitParameters()" type="button" class="btn-default">Draw my graph</button>
             <div class="container-fluid">
                 <div id="visualisation2"></div>
             </div>

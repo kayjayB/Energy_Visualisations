@@ -163,9 +163,8 @@ text {
 .dropbtn {
     background-color: #22419b;
     color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
+    /* padding: 16px;
+    font-size: 16px; */
     cursor: pointer;
 }
 
@@ -177,6 +176,8 @@ text {
 .dropdown {
     position: relative;
     display: inline-block;
+    margin-right: 2%;
+    margin-left: 2%;
 }
 
 .dropdown-content {

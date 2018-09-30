@@ -36,7 +36,7 @@ function submitParameters() {
             requiredYears.push(item.value);
         }
     });
-    console.log(requiredYears)
+    hideYearDropdown();
 
     let startDate = requiredYears[0].toString() + '/01/01 00:00'; // start of the year
     let endDate = requiredYears[0].toString() + '/12/31 23:59'; //end of the year
@@ -182,7 +182,7 @@ function createDropdown(Metrics) {
 
 function buildings(ID) {
     document.getElementById("buildingDropdown").classList.toggle("show");
-    //selectedBuilding = document.getElementById(ID).innerHTML;
+    hideYearDropdown();
 }
 
 // Close the dropdown if the user clicks outside of it
@@ -202,6 +202,17 @@ function years() {
 
 function hideDropdown() {
     var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+        }
+    }
+}
+
+function hideYearDropdown() {
+    var dropdowns = document.getElementsByClassName("dropdown-content2");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
         var openDropdown = dropdowns[i];
