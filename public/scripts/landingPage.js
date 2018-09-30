@@ -12,50 +12,8 @@ $(document).ready(function() {
     var start = ('2017/08/30 00:00');
     var metric = 'WITS_13_Jubilee_Road_kVarh';
 
-    //getData(metric, start, end);
     drawDashboard();
 });
-
-// function makeResponsive(svg) {
-//     var container = d3.select(svg.node().parentNode),
-//         width = parseInt(svg.style("width")),
-//         height = parseInt(svg.style("height")),
-//         aspectRatio = width / height;
-
-//     svg.attr("viewBox", "0 0 " + width + " " + height)
-//         .attr("preserveAspectRatio", "xMinYMid")
-//         .call(resize);
-
-//     d3.select(window).on("resize." + container.attr("id"), resize);
-
-
-//     function resize() {
-//         var targetWidth = parseInt(container.style("width"));
-//         svg.attr("width", targetWidth);
-//         svg.attr("height", Math.round(targetWidth / aspectRatio));
-//     }
-// }
-
-// function getData(loggerName, startDate, endDate) {
-//     var payload = {
-//         loggerName: loggerName,
-//         startDate: startDate,
-//         endDate: endDate
-//     };
-//     $.ajax({
-//         url: "/getData",
-//         type: "POST",
-//         contentType: "application/json",
-//         processData: false,
-//         data: JSON.stringify(payload),
-//         async: true,
-//         success: function(resp) {
-//             // console.log(resp);
-//             // return data;
-//             drawLineGraph(resp);
-//         }
-//     });
-// }
 
 function drawDashboard() {
 
@@ -67,7 +25,6 @@ function drawDashboard() {
     var radius = 40;
 
     d3.json("/cdn/data/graphNames.json").then(function(data) {
-        //    console.log(error);
         var circles = d3.range(10).map(function() {
             return {
                 x: Math.round(Math.random() * (width - radius * 2) + radius),
@@ -76,13 +33,9 @@ function drawDashboard() {
         });
 
         JSONdata = data.children;
-        console.log(JSONdata)
-        let dataCopy = JSONdata;
-        //var resultObject = Object.assign(dataCopy, circles);
 
         let resultObject = circles;
         $.extend(true, resultObject, JSONdata);
-        console.log(resultObject)
 
         var color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -96,7 +49,6 @@ function drawDashboard() {
                 .on("drag", dragged)
                 .on("end", dragended))
             .on("click", function(d) {
-                console.log("im clicked")
                 window.open(d.address, "_self");
             });
 

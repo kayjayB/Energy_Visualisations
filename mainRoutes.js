@@ -27,7 +27,7 @@ mainRouter.get('/visualisation2', function(req, res) {
 mainRouter.post('/getData', function(req, res) {
     mQuery
         .aggregator('sum')
-        .downsample('1h-avg') // Average datapoints hourly to limit the number of points being returned
+        .downsample(req.body.increments) // Average datapoints hourly to limit the number of points being returned
         .rate(false)
         .metric(req.body.loggerName)
         .tags('DataLoggerName', req.body.loggerName);
@@ -45,7 +45,6 @@ mainRouter.post('/getData', function(req, res) {
                 console.error(JSON.stringify(error));
                 return;
             }
-            // console.log(JSON.stringify(data));
 
             res.send(data);
         });
@@ -57,7 +56,6 @@ mainRouter.get('/getAllMetrics', function(req, res) {
             console.error(JSON.stringify(error));
             return;
         }
-        //  console.log(JSON.stringify(metrics));
         res.send(metrics);
     });
 });

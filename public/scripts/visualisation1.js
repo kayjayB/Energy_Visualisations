@@ -1,18 +1,19 @@
-var d;
-var margin = { top: 20, right: 20, bottom: 110, left: 40 },
+let d;
+let margin = { top: 20, right: 20, bottom: 110, left: 40 },
     width = 700 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
-var margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
+let margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
     height2 = 400 - margin2.top - margin2.bottom;
 
 $(document).ready(function() {
 
-    var end = ('2018/09/01 00:00');
-    var start = ('2017/08/30 00:00');
-    var metric = 'WITS_13_Jubilee_Road_kVarh';
+    let end = ('2018/09/01 00:00');
+    let start = ('2017/08/30 00:00');
+    let metric = 'WITS_13_Jubilee_Road_kVarh';
+    let increment = '1h-avg';
 
-    getData(metric, start, end);
+    getData(metric, start, end, increment);
 });
 
 function drawLineGraph(JSONresponse) {
@@ -124,31 +125,10 @@ function drawLineGraph(JSONresponse) {
         .call(brush.move, x.range());
 
     function brushed() {
-        var selection = d3.event.selection;
+        let selection = d3.event.selection;
         x.domain(selection.map(x2.invert, x2));
         focus.selectAll(".line").attr("d", line);
         focus.select(".axis--x").call(d3.axisBottom(x));
     }
 
 }
-
-// function getData(loggerName, startDate, endDate) {
-//     var payload = {
-//         loggerName: loggerName,
-//         startDate: startDate,
-//         endDate: endDate
-//     };
-//     $.ajax({
-//         url: "/getData",
-//         type: "POST",
-//         contentType: "application/json",
-//         processData: false,
-//         data: JSON.stringify(payload),
-//         async: true,
-//         success: function(resp) {
-//             // console.log(resp);
-//             // return data;
-//             drawLineGraph(resp);
-//         }
-//     });
-// }

@@ -11,11 +11,12 @@ function getMetrics() {
     });
 }
 
-function getData(loggerName, startDate, endDate) {
+function getData(loggerName, startDate, endDate, increments) {
     var payload = {
         loggerName: loggerName,
         startDate: startDate,
-        endDate: endDate
+        endDate: endDate,
+        increments: increments
     };
     $.ajax({
         url: "/getData",
@@ -25,8 +26,6 @@ function getData(loggerName, startDate, endDate) {
         data: JSON.stringify(payload),
         async: true,
         success: function(resp) {
-            // console.log(resp);
-            // return data;
             drawLineGraph(resp);
         }
     });

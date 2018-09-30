@@ -40,9 +40,8 @@ function submitParameters() {
 
     let startDate = requiredYears[0].toString() + '/01/01 00:00'; // start of the year
     let endDate = requiredYears[0].toString() + '/12/31 23:59'; //end of the year
-    console.log(startDate)
-
-    getData(selectedBuilding, startDate, endDate);
+    let increment = '1h-avg';
+    getData(selectedBuilding, startDate, endDate, increment);
 }
 
 function drawLineGraph(JSONresponse) {
@@ -190,7 +189,6 @@ window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
         if (event.target.parentNode.id.includes('buildingDropdown')) {
             selectedBuilding = event.target.innerHTML;
-            console.log("selectedBuilding", selectedBuilding)
         }
         hideDropdown();
     }
