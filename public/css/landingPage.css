@@ -35,7 +35,7 @@ body {
 
 #sidebar-container {
     min-height: 100vh;
-    background-color: #9eb6fb;
+    background-color: #22419BB3;
     padding: 0;
 }
 
@@ -74,17 +74,17 @@ body {
 /* Separators */
 
 .sidebar-separator-title {
-    background-color: #9eb6fb;
+    background-color: #22419BB3;
     height: 35px;
 }
 
 .sidebar-separator {
-    background-color: #9eb6fb;
+    background-color: #22419BB3;
     height: 25px;
 }
 
 .logo-separator {
-    background-color: #9eb6fb;
+    background-color: #22419BB3;
     height: 60px;
 }
 
@@ -109,12 +109,17 @@ body {
 }
 
 .sidenavStyle {
-    background-color: #9eb6fb;
+    background-color: #22419BB3;
 }
 
 .list-group-item-action:hover,
 .list-group-item-action:focus {
-    background-color: #668dff;
+    background-color: #9eb6fb;
+}
+
+.list-group-item.active {
+    background-color: #9eb6fb;
+    border-color: #9eb6fb;
 }
 
 .navbar-toggler-icon {
@@ -153,4 +158,75 @@ body {
 
 text {
     pointer-events: none;
+}
+
+.dropbtn {
+    background-color: #22419b;
+    color: white;
+    /* padding: 16px;
+    font-size: 16px; */
+    cursor: pointer;
+}
+
+.dropbtn:hover,
+.dropbtn:focus {
+    background-color: #9eb6fb;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content2 {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content2 a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {
+    background-color: #ddd;
+    text-decoration: none;
+}
+
+.dropdownLink {
+    cursor: pointer;
+}
+
+.show {
+    display: block;
+}
+
+.text-muted {
+    color: #909eaa !important;
 }

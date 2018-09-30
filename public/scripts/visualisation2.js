@@ -1,24 +1,54 @@
-let d;
-let margin = { top: 20, right: 20, bottom: 110, left: 40 },
+var d;
+var margin = { top: 20, right: 20, bottom: 110, left: 40 },
     width = 700 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
-let margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
+var selectedBuilding = "";
+var end = ('2018/09/01 00:00');
+var start = ('2017/08/30 00:00');
+
+var margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
     height2 = 400 - margin2.top - margin2.bottom;
 
 $(document).ready(function() {
 
-    let end = ('2018/09/01 00:00');
-    let start = ('2017/08/30 00:00');
-    let metric = 'WITS_13_Jubilee_Road_kVarh';
-    let increment = '1h-avg';
+    var checkboxes = document.getElementsByTagName('input');
 
-    getData(metric, start, end, increment);
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].type == 'checkbox') {
+            checkboxes[i].checked = false;
+        }
+    }
+
+    getMetrics();
 });
 
-function drawLineGraph(JSONresponse) {
+function submitParameters() {
+    if (selectedBuilding == "") {
+        alert("Please select a building");
+        return;
+    }
+    let dropdown = document.getElementById("yearDropdown");
+    let children = dropdown.childNodes;
+    let requiredYears = [];
+    children.forEach(function(item) {
+        if (item.checked == true) {
+            requiredYears.push(item.value);
+        }
+    });
+    hideYearDropdown();
 
-    var svg = d3.select('#my-visualisation').append('svg')
+    let startDate = requiredYears[0].toString() + '/01/01 00:00'; // start of the year
+    let endDate = requiredYears[0].toString() + '/12/31 23:59'; //end of the year
+    let increment = '1h-avg';
+    getData(selectedBuilding, startDate, endDate, increment);
+}
+
+function drawLineGraph(JSONresponse) {
+    var clear = d3.select('#visualisation2');
+    clear.selectAll("*").remove();
+
+    var svg = d3.select('#visualisation2').append('svg')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .call(makeResponsive);
@@ -125,10 +155,67 @@ function drawLineGraph(JSONresponse) {
         .call(brush.move, x.range());
 
     function brushed() {
-        let selection = d3.event.selection;
+        var selection = d3.event.selection;
         x.domain(selection.map(x2.invert, x2));
         focus.selectAll(".line").attr("d", line);
         focus.select(".axis--x").call(d3.axisBottom(x));
     }
 
+}
+
+// *************   Dropdowns   *******************
+
+function createDropdown(Metrics) {
+    let dropdownContainer = document.getElementById("buildingDropdown");
+
+    for (let i = 0; i < Metrics.length; i++) {
+        let link = document.createElement("a");
+        link.className = "dropdownLink";
+        link.ID = "dropdownLink";
+        link.innerHTML = Metrics[i];
+
+        dropdownContainer.appendChild(link);
+    }
+}
+
+
+function buildings(ID) {
+    document.getElementById("buildingDropdown").classList.toggle("show");
+    hideYearDropdown();
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+        if (event.target.parentNode.id.includes('buildingDropdown')) {
+            selectedBuilding = event.target.innerHTML;
+        }
+        hideDropdown();
+    }
+}
+
+function years() {
+    document.getElementById("yearDropdown").classList.toggle("show");
+}
+
+function hideDropdown() {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+        }
+    }
+}
+
+function hideYearDropdown() {
+    var dropdowns = document.getElementsByClassName("dropdown-content2");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+        }
+    }
 }

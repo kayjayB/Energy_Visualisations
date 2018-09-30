@@ -20,10 +20,14 @@ mainRouter.get('/visualisation1', function(req, res) {
     res.sendFile(path.join(__dirname, 'views', 'visualisation1.html'));
 });
 
+mainRouter.get('/visualisation2', function(req, res) {
+    res.sendFile(path.join(__dirname, 'views', 'visualisation2.html'));
+});
+
 mainRouter.post('/getData', function(req, res) {
     mQuery
         .aggregator('sum')
-        .downsample('1h-avg') // Average datapoints hourly to limit the number of points being returned
+        .downsample(req.body.increments) // Average datapoints hourly to limit the number of points being returned
         .rate(false)
         .metric(req.body.loggerName)
         .tags('DataLoggerName', req.body.loggerName);
@@ -41,10 +45,19 @@ mainRouter.post('/getData', function(req, res) {
                 console.error(JSON.stringify(error));
                 return;
             }
-            // console.log(JSON.stringify(data));
 
             res.send(data);
         });
+});
+
+mainRouter.get('/getAllMetrics', function(req, res) {
+    client.metrics(function onResponse(error, metrics) {
+        if (error) {
+            console.error(JSON.stringify(error));
+            return;
+        }
+        res.send(metrics);
+    });
 });
 
 module.exports = mainRouter;
