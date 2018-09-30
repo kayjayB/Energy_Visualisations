@@ -172,6 +172,7 @@ function createDropdown(Metrics) {
     for (let i = 0; i < Metrics.length; i++) {
         let link = document.createElement("a");
         link.className = "dropdownLink";
+        link.ID = "dropdownLink";
         link.innerHTML = Metrics[i];
 
         dropdownContainer.appendChild(link);
@@ -179,14 +180,18 @@ function createDropdown(Metrics) {
 }
 
 
-function buildings() {
+function buildings(ID) {
     document.getElementById("buildingDropdown").classList.toggle("show");
+    //selectedBuilding = document.getElementById(ID).innerHTML;
 }
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
-        selectedBuilding = event.target.innerHTML;
+        if (event.target.parentNode.id.includes('buildingDropdown')) {
+            selectedBuilding = event.target.innerHTML;
+            console.log("selectedBuilding", selectedBuilding)
+        }
         hideDropdown();
     }
 }
