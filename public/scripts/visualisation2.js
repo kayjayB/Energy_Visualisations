@@ -46,6 +46,8 @@ function submitParameters() {
 }
 
 function drawLineGraph(JSONresponse) {
+    var clear = d3.select('#visualisation2');
+    clear.selectAll("*").remove();
 
     var svg = d3.select('#visualisation2').append('svg')
         .attr("width", width + margin.left + margin.right)
