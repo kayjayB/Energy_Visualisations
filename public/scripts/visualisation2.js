@@ -3,42 +3,46 @@ var margin = { top: 20, right: 20, bottom: 110, left: 40 },
     width = 700 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
+var selectedBuilding = "";
+var end = ('2018/09/01 00:00');
+var start = ('2017/08/30 00:00');
+
 var margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
     height2 = 400 - margin2.top - margin2.bottom;
 
 $(document).ready(function() {
 
-    var end = ('2018/09/01 00:00');
-    var start = ('2017/08/30 00:00');
-    var metric = 'WITS_13_Jubilee_Road_kVarh';
+    var checkboxes = document.getElementsByTagName('input');
+
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].type == 'checkbox') {
+            checkboxes[i].checked = false;
+        }
+    }
 
     getMetrics();
 });
 
-function getMetrics() {
-    $.ajax({
-        url: "/getAllMetrics",
-        type: "GET",
-        contentType: "application/json",
-        processData: false,
-        async: true,
-        success: function(resp) {
-            createDropdown(resp);
+function submitParameters() {
+    if (selectedBuilding == "") {
+        alert("Please select a building");
+        return;
+    }
+    let dropdown = document.getElementById("yearDropdown");
+    let children = dropdown.childNodes;
+    let requiredYears = [];
+    children.forEach(function(item) {
+        if (item.checked == true) {
+            requiredYears.push(item.value);
         }
     });
-}
+    console.log(requiredYears)
 
-function createDropdown(Metrics) {
-    let dropdownContainer = document.getElementById("buildingDropdown");
+    let startDate = requiredYears[0].toString() + '/01/01 00:00'; // start of the year
+    let endDate = requiredYears[0].toString() + '/12/31 23:59'; //end of the year
+    console.log(startDate)
 
-    for (let i = 0; i < Metrics.length; i++) {
-        let link = document.createElement("a");
-        link.className = "dropdownLink";
-        link.id = "dropdownLink_" + i.toString();
-        link.innerHTML = Metrics[i];
-
-        dropdownContainer.appendChild(link);
-    }
+    getData(selectedBuilding, startDate, endDate);
 }
 
 function drawLineGraph(JSONresponse) {
@@ -158,62 +162,44 @@ function drawLineGraph(JSONresponse) {
 
 }
 
-function makeResponsive(svg) {
-    var container = d3.select(svg.node().parentNode),
-        width = parseInt(svg.style("width")),
-        height = parseInt(svg.style("height")),
-        aspectRatio = width / height;
+// *************   Dropdowns   *******************
 
-    svg.attr("viewBox", "0 0 " + width + " " + height)
-        .attr("preserveAspectRatio", "xMinYMid")
-        .call(resize);
+function createDropdown(Metrics) {
+    let dropdownContainer = document.getElementById("buildingDropdown");
 
-    d3.select(window).on("resize." + container.attr("id"), resize);
+    for (let i = 0; i < Metrics.length; i++) {
+        let link = document.createElement("a");
+        link.className = "dropdownLink";
+        link.innerHTML = Metrics[i];
 
-
-    function resize() {
-        var targetWidth = parseInt(container.style("width"));
-        svg.attr("width", targetWidth);
-        svg.attr("height", Math.round(targetWidth / aspectRatio));
+        dropdownContainer.appendChild(link);
     }
 }
 
-function getData(loggerName, startDate, endDate) {
-    var payload = {
-        loggerName: loggerName,
-        startDate: startDate,
-        endDate: endDate
-    };
-    $.ajax({
-        url: "/getData",
-        type: "POST",
-        contentType: "application/json",
-        processData: false,
-        data: JSON.stringify(payload),
-        async: true,
-        success: function(resp) {
-            // console.log(resp);
-            // return data;'
-            drawLineGraph(resp);
-        }
-    });
-}
 
-function myFunction() {
+function buildings() {
     document.getElementById("buildingDropdown").classList.toggle("show");
 }
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
+        selectedBuilding = event.target.innerHTML;
+        hideDropdown();
+    }
+}
 
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
+function years() {
+    document.getElementById("yearDropdown").classList.toggle("show");
+}
+
+function hideDropdown() {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
         }
     }
 }
