@@ -132,43 +132,23 @@ function drawLineGraph(JSONresponse) {
 
 }
 
-function makeResponsive(svg) {
-    var container = d3.select(svg.node().parentNode),
-        width = parseInt(svg.style("width")),
-        height = parseInt(svg.style("height")),
-        aspectRatio = width / height;
-
-    svg.attr("viewBox", "0 0 " + width + " " + height)
-        .attr("preserveAspectRatio", "xMinYMid")
-        .call(resize);
-
-    d3.select(window).on("resize." + container.attr("id"), resize);
-
-
-    function resize() {
-        var targetWidth = parseInt(container.style("width"));
-        svg.attr("width", targetWidth);
-        svg.attr("height", Math.round(targetWidth / aspectRatio));
-    }
-}
-
-function getData(loggerName, startDate, endDate) {
-    var payload = {
-        loggerName: loggerName,
-        startDate: startDate,
-        endDate: endDate
-    };
-    $.ajax({
-        url: "/getData",
-        type: "POST",
-        contentType: "application/json",
-        processData: false,
-        data: JSON.stringify(payload),
-        async: true,
-        success: function(resp) {
-            // console.log(resp);
-            // return data;
-            drawLineGraph(resp);
-        }
-    });
-}
+// function getData(loggerName, startDate, endDate) {
+//     var payload = {
+//         loggerName: loggerName,
+//         startDate: startDate,
+//         endDate: endDate
+//     };
+//     $.ajax({
+//         url: "/getData",
+//         type: "POST",
+//         contentType: "application/json",
+//         processData: false,
+//         data: JSON.stringify(payload),
+//         async: true,
+//         success: function(resp) {
+//             // console.log(resp);
+//             // return data;
+//             drawLineGraph(resp);
+//         }
+//     });
+// }
