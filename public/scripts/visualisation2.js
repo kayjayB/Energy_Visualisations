@@ -4,6 +4,7 @@ var margin = { top: 20, right: 20, bottom: 110, left: 40 },
     height = 400 - margin.top - margin.bottom;
 
 var selectedBuilding = "";
+var resolution;
 var end = ('2018/09/01 00:00');
 var start = ('2017/08/30 00:00');
 
@@ -189,6 +190,9 @@ window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
         if (event.target.parentNode.id.includes('buildingDropdown')) {
             selectedBuilding = event.target.innerHTML;
+        } else if (event.target.parentNode.id.includes('incrementDropdown')) {
+            resolution = event.target.id;
+            console.log(resolution)
         }
         hideDropdown();
     }
@@ -218,4 +222,8 @@ function hideYearDropdown() {
             openDropdown.classList.remove('show');
         }
     }
+}
+
+function increments() {
+    document.getElementById("incrementDropdown").classList.toggle("show");
 }
