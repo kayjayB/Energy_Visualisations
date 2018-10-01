@@ -6,15 +6,17 @@ let margin = { top: 20, right: 20, bottom: 110, left: 40 },
 let margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
     height2 = 400 - margin2.top - margin2.bottom;
 
-$(document).ready(function() {
+var resolution = "1h-avg";
+var units = "kVarh";
 
-    let end = ('2018/09/01 00:00');
-    let start = ('2017/08/30 00:00');
-    let metric = 'WITS_13_Jubilee_Road_kVarh';
-    let increment = '1h-avg';
+let metric = 'WITS_13_Jubilee_Road_kVarh';
+let end = ('2018/09/01 00:00');
+let start = ('2017/08/30 00:00');
 
-    getData(metric, start, end, increment);
-});
+// $(document).ready(function() {
+
+//     //getData(metric, start, end, increment);
+// });
 
 function drawLineGraph(JSONresponse) {
 
@@ -131,4 +133,61 @@ function drawLineGraph(JSONresponse) {
         focus.select(".axis--x").call(d3.axisBottom(x));
     }
 
+}
+
+// *************   Dropdowns   *******************
+
+function createDropdown(Metrics) {
+    let dropdownContainer = document.getElementById("buildingDropdown");
+
+    for (let i = 0; i < Metrics.length; i++) {
+        let link = document.createElement("a");
+        link.className = "dropdownLink";
+        link.ID = "dropdownLink";
+        link.innerHTML = Metrics[i];
+
+        dropdownContainer.appendChild(link);
+    }
+}
+
+
+function buildings(ID) {
+    document.getElementById("buildingDropdown").classList.toggle("show");
+    hideYearDropdown();
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+        if (event.target.parentNode.id.includes('incrementDropdown')) {
+            resolution = event.target.id;
+        }
+        if (event.target.parentNode.id.includes('unitsDropdown')) {
+            units = event.target.id;
+        }
+        hideDropdown();
+    }
+}
+
+function unitsSelector() {
+    document.getElementById("unitsDropdown").classList.toggle("show");
+}
+
+function hideDropdown() {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+        }
+    }
+}
+
+function increments() {
+    document.getElementById("incrementDropdown").classList.toggle("show");
+}
+
+function submitParameters() {
+    getData(metric, start, end, resolution);
 }

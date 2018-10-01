@@ -227,6 +227,10 @@ text {
     cursor: pointer;
 }
 
+#unitsDropdown {
+    cursor: pointer;
+}
+
 .show {
     display: block;
 }

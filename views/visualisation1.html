@@ -86,6 +86,34 @@
         </div>
 
         <div class="col py-3">
+            <div class="row">
+                <div class="col-sm-4">
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="dropdown">
+                        <button onclick="unitsSelector()" class="dropbtn btn btn-outline-primary">Metric</button>
+                        <div id="unitsDropdown" class="dropdown-content">
+                            <a id="energy">Energy (kWh)</a>
+                            <a id="power">Reactive Power (kVarh)</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button onclick="increments()" class="dropbtn btn btn-outline-primary">Resolution</button>
+                        <div id="incrementDropdown" class="dropdown-content">
+                            <a id="30m-avg">30 Minutes</a>
+                            <a id="1h-avg">1 Hour</a>
+                            <a id="6h-avg">6 Hour</a>
+                            <a id="12h-avg">12 Hour</a>
+                            <a id="1d-avg">1 Day</a>
+                            <a id="30d-avg">1 Month</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <button onclick="submitParameters()" type="button" class="btn btn-outline-primary">Draw my graph</button>
+                </div>
+            </div>
             <div class="container-fluid">
                 <div id="my-visualisation"></div>
             </div>
