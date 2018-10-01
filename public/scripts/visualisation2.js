@@ -50,6 +50,13 @@ function drawLineGraph(JSONresponse) {
     var clear = d3.select('#visualisation2');
     clear.selectAll("*").remove();
 
+    let labelTextIndex = selectedBuilding.lastIndexOf("_");
+    let labelText = selectedBuilding.substring(labelTextIndex);
+    if (labelText.match("kWh")) {
+        labelText = "Energy (kWh)"
+    } else if (labelText.match("kVarh")) {
+        labelText = "Reactive Power (kVarh)"
+    }
     var svg = d3.select('#visualisation2').append('svg')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -132,7 +139,7 @@ function drawLineGraph(JSONresponse) {
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .text("Energy (kWh)");
+        .text(labelText);
 
     svg.append("text")
         .attr("transform",
