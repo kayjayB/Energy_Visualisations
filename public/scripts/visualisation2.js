@@ -4,7 +4,7 @@ var margin = { top: 20, right: 20, bottom: 110, left: 40 },
     height = 400 - margin.top - margin.bottom;
 
 var selectedBuilding = "";
-var resolution;
+var resolution = "1h-avg";
 var end = ('2018/09/01 00:00');
 var start = ('2017/08/30 00:00');
 
@@ -41,14 +41,22 @@ function submitParameters() {
 
     let startDate = requiredYears[0].toString() + '/01/01 00:00'; // start of the year
     let endDate = requiredYears[0].toString() + '/12/31 23:59'; //end of the year
-    let increment = '1h-avg';
-    getData(selectedBuilding, startDate, endDate, increment);
+    //let increment = '1h-avg';
+    console.log(resolution);
+    getData(selectedBuilding, startDate, endDate, resolution);
 }
 
 function drawLineGraph(JSONresponse) {
     var clear = d3.select('#visualisation2');
     clear.selectAll("*").remove();
 
+    let labelTextIndex = selectedBuilding.lastIndexOf("_");
+    let labelText = selectedBuilding.substring(labelTextIndex);
+    if (labelText.match("kWh")) {
+        labelText = "Energy (kWh)"
+    } else if (labelText.match("kVarh")) {
+        labelText = "Reactive Power (kVarh)"
+    }
     var svg = d3.select('#visualisation2').append('svg')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -131,7 +139,7 @@ function drawLineGraph(JSONresponse) {
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .text("Energy (kWh)");
+        .text(labelText);
 
     svg.append("text")
         .attr("transform",
@@ -192,7 +200,6 @@ window.onclick = function(event) {
             selectedBuilding = event.target.innerHTML;
         } else if (event.target.parentNode.id.includes('incrementDropdown')) {
             resolution = event.target.id;
-            console.log(resolution)
         }
         hideDropdown();
     }
