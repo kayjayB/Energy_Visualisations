@@ -4,7 +4,7 @@ var margin = { top: 20, right: 20, bottom: 110, left: 40 },
     height = 400 - margin.top - margin.bottom;
 
 var selectedBuilding = "";
-var resolution;
+var resolution = "1h-avg";
 var end = ('2018/09/01 00:00');
 var start = ('2017/08/30 00:00');
 
@@ -41,8 +41,9 @@ function submitParameters() {
 
     let startDate = requiredYears[0].toString() + '/01/01 00:00'; // start of the year
     let endDate = requiredYears[0].toString() + '/12/31 23:59'; //end of the year
-    let increment = '1h-avg';
-    getData(selectedBuilding, startDate, endDate, increment);
+    //let increment = '1h-avg';
+    console.log(resolution);
+    getData(selectedBuilding, startDate, endDate, resolution);
 }
 
 function drawLineGraph(JSONresponse) {
@@ -192,7 +193,6 @@ window.onclick = function(event) {
             selectedBuilding = event.target.innerHTML;
         } else if (event.target.parentNode.id.includes('incrementDropdown')) {
             resolution = event.target.id;
-            console.log(resolution)
         }
         hideDropdown();
     }
