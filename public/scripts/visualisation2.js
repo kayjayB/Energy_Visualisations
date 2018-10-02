@@ -61,6 +61,7 @@ function drawLineGraph(JSONresponse) {
     } else if (labelText.match("kVarh")) {
         labelText = "Reactive Power (kVarh)"
     }
+
     var svg = d3.select('#visualisation2').append('svg')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -108,12 +109,20 @@ function drawLineGraph(JSONresponse) {
         .x(function(data) { return x2(data.date); })
         .y(function(data) { return y2(data.consumption); });
 
+    var parseTime = d3.timeParse("%m-%d %H:%M");
+    var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+
     let d = [];
     for (let index = 0; index < JSONresponse.length; index++) {
         d.push(JSONresponse[index][0]);
         d[index].metric = requiredYears[index]; // Replace the metric name with the year
     }
     //console.log(d)
+    d.forEach(function(data) { // Make every date in the csv data a javascript date object format
+        data.dps.forEach(function(e) {
+            e[0] = new Date(e[0]);
+        });
+    });
 
     var color = d3.scaleOrdinal().range(d3.schemeCategory10);
     color.domain(d3.keys(requiredYears).filter(function(key) { // Set the domain of the color ordinal scale to be all the csv headers except "date", matching a color to an issue
@@ -129,10 +138,11 @@ function drawLineGraph(JSONresponse) {
             values: d.find(function(element) { return element.metric == requiredYears[funcData]; }).dps.map(function(data) { // "values": which has an array of the dates and ratings
                 return {
                     date: data[0],
-                    consumption: data[1],
+                    consumption: +data[1],
                 };
             }),
-            visible: (funcData === requiredYears[1] ? true : false)
+            //visible: (funcData === requiredYears[1] ? true : false)
+            visible: true
         };
     });
 
@@ -186,7 +196,6 @@ function drawLineGraph(JSONresponse) {
         .attr("d", function(d) {
             return d.visible ? line(d.values) : null; // If array key "visible" = true then draw line, if not then don't 
         })
-        .attr("clip-path", "url(#clip)") //use clip path to make irrelevant part invisible
         .style("stroke", function(d) { return color(d.year); });
 
     svg.append("text")
