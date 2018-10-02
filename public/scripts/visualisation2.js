@@ -45,8 +45,7 @@ function submitParameters() {
         startDate.push(requiredYears[i].toString() + '/01/01 00:00'); // start of the year
         endDate.push(requiredYears[i].toString() + '/12/31 23:59'); //end of the year
     }
-    //let increment = '1h-avg';
-    console.log(endDate);
+
     getTimeData(selectedBuilding, startDate, endDate, resolution);
 }
 
@@ -103,8 +102,8 @@ function drawLineGraph(JSONresponse) {
         .on("brush", brushed);
 
     var line = d3.line().curve(d3.curveBasis)
-        .x(function(data) { console.log(x(data.date)); return x(data.date); })
-        .y(function(data) { console.log(y(data.consumption)); return y(data.consumption); });
+        .x(function(data) { return x(data.date); })
+        .y(function(data) { return y(data.consumption); });
 
     var line2 = d3.line().curve(d3.curveBasis)
         .x(function(data) { return x2(data.date); })
@@ -126,7 +125,7 @@ function drawLineGraph(JSONresponse) {
     });
 
     var colour = d3.scaleOrdinal().range(d3.schemeCategory10);
-    colour.domain(d3.keys(requiredYears).filter(function(key) { // Set the domain of the color ordinal scale to be all the csv headers except "date", matching a color to an issue
+    colour.domain(d3.keys(requiredYears).filter(function(key) {
         return key;
     }));
 
@@ -135,7 +134,7 @@ function drawLineGraph(JSONresponse) {
         // console.log(requiredYears[funcData]);
         // console.log(d);
         return {
-            year: funcData,
+            year: requiredYears[funcData],
             values: d.find(function(element) { return element.metric == requiredYears[funcData]; }).dps.map(function(data) { // "values": which has an array of the dates and ratings
                 return {
                     date: data[0],
@@ -150,8 +149,8 @@ function drawLineGraph(JSONresponse) {
     console.log(formattedData);
 
     x.domain(d3.extent(d[0].dps, function(data) { return data[0]; }));
-    y.domain(d3.extent(d[0].dps, function(data) { return data[1]; }));
-    //z.domain(formattedData.map(function(c) { return c.year; }));
+    //y.domain(d3.extent(d[0].dps, function(data) { return data[1]; }));
+    y.domain([0, d3.max(formattedData, function(c) { return d3.max(c.values, function(v) { return v.consumption; }); })]);
 
     x2.domain(x.domain());
     y2.domain(y.domain());
@@ -173,16 +172,6 @@ function drawLineGraph(JSONresponse) {
         .style("text-anchor", "middle")
         .text(labelText);
 
-    // focus.append("path")
-    //     .data(formattedData)
-    //     .attr("fill", "none")
-    //     .attr("stroke", "steelblue")
-    //     .attr("stroke-linejoin", "round")
-    //     .attr("stroke-linecap", "round")
-    //     .attr("stroke-width", 1.5)
-    //     .attr("class", "line")
-    //     .attr("d", line);
-
     var issue = focus.selectAll(".issue")
         .data(formattedData) // Select nested data and append to new svg group elements
         .enter().append("g")
@@ -195,9 +184,17 @@ function drawLineGraph(JSONresponse) {
         .attr("fill", "none")
         .style("pointer-events", "none") // Stop line interferring with cursor
         .attr("d", function(data) {
-            return data.visible ? line(data.values) : null; // If array key "visible" = true then draw line, if not then don't 
+            return line(data.values); // If array key "visible" = true then draw line, if not then don't 
         })
-        .style("stroke", function(d) { return colour(d.year); });
+        .style("stroke", function(data) { return colour(data.year); });
+
+    issue.append("text")
+        .datum(function(data) { return { year: data.year, value: data.values[data.values.length - 1] }; })
+        .attr("transform", function(data) { return "translate(" + x(data.value.date) + "," + y(data.value.consumption) + ")"; })
+        .attr("x", 3)
+        .attr("dy", "0.35em")
+        .style("font", "10px sans-serif")
+        .text(function(data) { return data.year; });
 
     svg.append("text")
         .attr("transform",
@@ -206,20 +203,20 @@ function drawLineGraph(JSONresponse) {
         .style("text-anchor", "middle")
         .text("Date");
 
-    context.append("path")
-        .data(formattedData)
-        .attr("class", "line")
-        .attr("d", line2)
+    // context.append("path")
+    //     .data(formattedData)
+    //     .attr("class", "line")
+    //     .attr("d", line2)
 
-    context.append("g")
-        .attr("class", "axis axis--x")
-        .attr("transform", "translate(0," + height2 + ")")
-        .call(xAxis2);
+    // context.append("g")
+    //     .attr("class", "axis axis--x")
+    //     .attr("transform", "translate(0," + height2 + ")")
+    //     .call(xAxis2);
 
-    context.append("g")
-        .attr("class", "brush")
-        .call(brush)
-        .call(brush.move, x.range());
+    // context.append("g")
+    //     .attr("class", "brush")
+    //     .call(brush)
+    //     .call(brush.move, x.range());
 
     function brushed() {
         var selection = d3.event.selection;
