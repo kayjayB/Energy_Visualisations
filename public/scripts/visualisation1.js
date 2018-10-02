@@ -20,6 +20,9 @@ let start = ('2017/08/30 00:00');
 
 function drawLineGraph(JSONresponse) {
 
+    var clear = d3.select('#my-visualisation');
+    clear.selectAll("*").remove();
+
     var svg = d3.select('#my-visualisation').append('svg')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)

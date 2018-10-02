@@ -50,6 +50,40 @@ mainRouter.post('/getData', function(req, res) {
         });
 });
 
+mainRouter.post('/getTimeData', function(req, res) {
+    let startDate = req.body.startDate;
+    let endDate = req.body.endDate;
+    var results = [];
+    for (let i = 0; i < startDate.length; i++) {
+        mQuery
+            .aggregator('sum')
+            .downsample(req.body.increments) // Average datapoints hourly to limit the number of points being returned
+            .rate(false)
+            .metric(req.body.loggerName)
+            .tags('DataLoggerName', req.body.loggerName);
+
+        client
+            .ms(true)
+            .arrays(true)
+            .tsuids(false)
+            .annotations('none')
+            .start(startDate[i])
+            .end(endDate[i])
+            .queries(mQuery)
+            .get(function onData(error, data) {
+                if (error) {
+                    console.error(JSON.stringify(error));
+                    return;
+                }
+                results.push(data);
+                if (results.length == startDate.length) {
+                    console.log(results)
+                    res.send(results);
+                }
+            });
+    }
+});
+
 mainRouter.get('/getAllMetrics', function(req, res) {
     client.metrics(function onResponse(error, metrics) {
         if (error) {

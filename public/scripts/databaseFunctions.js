@@ -30,3 +30,23 @@ function getData(loggerName, startDate, endDate, increments) {
         }
     });
 }
+
+function getTimeData(loggerName, startDate, endDate, increments) {
+    var payload = {
+        loggerName: loggerName,
+        startDate: startDate,
+        endDate: endDate,
+        increments: increments
+    };
+    $.ajax({
+        url: "/getTimeData",
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        data: JSON.stringify(payload),
+        async: true,
+        success: function(resp) {
+            drawLineGraph(resp);
+        }
+    });
+}
