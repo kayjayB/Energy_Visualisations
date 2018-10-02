@@ -46,6 +46,7 @@ function getTimeData(loggerName, startDate, endDate, increments) {
         data: JSON.stringify(payload),
         async: true,
         success: function(resp) {
+            // console.log(resp)
             drawLineGraph(resp);
         }
     });

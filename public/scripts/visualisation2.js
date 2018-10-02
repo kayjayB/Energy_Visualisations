@@ -103,13 +103,15 @@ function drawLineGraph(JSONresponse) {
         .on("brush", brushed);
 
     var line = d3.line().curve(d3.curveBasis)
-        .x(function(data) { return x(data.date); })
-        .y(function(data) { return y(data.consumption); });
+        .x(function(data) { console.log(x(data.date)); return x(data.date); })
+        .y(function(data) { console.log(y(data.consumption)); return y(data.consumption); });
+
     var line2 = d3.line().curve(d3.curveBasis)
         .x(function(data) { return x2(data.date); })
         .y(function(data) { return y2(data.consumption); });
 
-    var parseTime = d3.timeParse("%m-%d %H:%M");
+    var parseTime = d3.timeFormat("%m-%d %H:%M");
+    var parseDate = d3.timeParse("%s");
     var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
     let d = [];
@@ -117,19 +119,18 @@ function drawLineGraph(JSONresponse) {
         d.push(JSONresponse[index][0]);
         d[index].metric = requiredYears[index]; // Replace the metric name with the year
     }
-    //console.log(d)
+
     d.forEach(function(data) { // Make every date in the csv data a javascript date object format
-        data.dps.forEach(function(e) {
-            e[0] = new Date(e[0]);
-        });
+        data.date = parseDate(data.date);
+        data.date = parseTime(data.date);
     });
 
-    var color = d3.scaleOrdinal().range(d3.schemeCategory10);
-    color.domain(d3.keys(requiredYears).filter(function(key) { // Set the domain of the color ordinal scale to be all the csv headers except "date", matching a color to an issue
+    var colour = d3.scaleOrdinal().range(d3.schemeCategory10);
+    colour.domain(d3.keys(requiredYears).filter(function(key) { // Set the domain of the color ordinal scale to be all the csv headers except "date", matching a color to an issue
         return key;
     }));
 
-    let formattedData = color.domain().map(function(funcData) { // Nest the data into an array of objects with new keys
+    let formattedData = colour.domain().map(function(funcData) { // Nest the data into an array of objects with new keys
         // console.log(funcData);
         // console.log(requiredYears[funcData]);
         // console.log(d);
@@ -187,16 +188,16 @@ function drawLineGraph(JSONresponse) {
         .enter().append("g")
         .attr("class", "issue");
 
+    // console.log("values are: ", x(d.values.date))
+    //let graphData = d.values;
     issue.append("path")
         .attr("class", "line")
+        .attr("fill", "none")
         .style("pointer-events", "none") // Stop line interferring with cursor
-        .attr("id", function(d) {
-            return "line-" + d.year.replace(" ", "").replace("/", ""); // Give line id of line-(insert issue name, with any spaces replaced with no spaces)
+        .attr("d", function(data) {
+            return data.visible ? line(data.values) : null; // If array key "visible" = true then draw line, if not then don't 
         })
-        .attr("d", function(d) {
-            return d.visible ? line(d.values) : null; // If array key "visible" = true then draw line, if not then don't 
-        })
-        .style("stroke", function(d) { return color(d.year); });
+        .style("stroke", function(d) { return colour(d.year); });
 
     svg.append("text")
         .attr("transform",
