@@ -1,4 +1,3 @@
-var d;
 var margin = { top: 20, right: 20, bottom: 110, left: 40 },
     width = 700 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
@@ -7,6 +6,8 @@ var selectedBuilding = "";
 var resolution = "1h-avg";
 var end = ('2018/09/01 00:00');
 var start = ('2017/08/30 00:00');
+
+let requiredYears = [];
 
 var margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
     height2 = 400 - margin2.top - margin2.bottom;
@@ -31,7 +32,7 @@ function submitParameters() {
     }
     let dropdown = document.getElementById("yearDropdown");
     let children = dropdown.childNodes;
-    let requiredYears = [];
+    requiredYears = [];
     children.forEach(function(item) {
         if (item.checked == true) {
             requiredYears.push(item.value);
@@ -100,32 +101,49 @@ function drawLineGraph(JSONresponse) {
         ])
         .on("brush", brushed);
 
-    var line = d3.line()
-        .x(function(d) { return x(d[0]); })
-        .y(function(d) { return y(d[1]); });
-    var line2 = d3.line()
-        .x(function(d) { return x2(d[0]); })
-        .y(function(d) { return y2(d[1]); });
+    var line = d3.line().curve(d3.curveBasis)
+        .x(function(data) { return x(data.date); })
+        .y(function(data) { return y(data.consumption); });
+    var line2 = d3.line().curve(d3.curveBasis)
+        .x(function(data) { return x2(data.date); })
+        .y(function(data) { return y2(data.consumption); });
 
-    d = JSONresponse;
-    d = d[0].dps;
+    let d = [];
+    for (let index = 0; index < JSONresponse.length; index++) {
+        d.push(JSONresponse[index][0]);
+        d[index].metric = requiredYears[index]; // Replace the metric name with the year
+    }
+    //console.log(d)
 
-    x.domain(d3.extent(d, function(data) { return data[0]; }));
-    y.domain(d3.extent(d, function(data) { return data[1]; }));
+    var color = d3.scaleOrdinal().range(d3.schemeCategory10);
+    color.domain(d3.keys(requiredYears).filter(function(key) { // Set the domain of the color ordinal scale to be all the csv headers except "date", matching a color to an issue
+        return key;
+    }));
+
+    let formattedData = color.domain().map(function(funcData) { // Nest the data into an array of objects with new keys
+        // console.log(funcData);
+        // console.log(requiredYears[funcData]);
+        // console.log(d);
+        return {
+            year: funcData,
+            values: d.find(function(element) { return element.metric == requiredYears[funcData]; }).dps.map(function(data) { // "values": which has an array of the dates and ratings
+                return {
+                    date: data[0],
+                    consumption: data[1],
+                };
+            }),
+            visible: (funcData === requiredYears[1] ? true : false)
+        };
+    });
+
+    console.log(formattedData);
+
+    x.domain(d3.extent(d[0].dps, function(data) { return data[0]; }));
+    y.domain(d3.extent(d[0].dps, function(data) { return data[1]; }));
+    //z.domain(formattedData.map(function(c) { return c.year; }));
 
     x2.domain(x.domain());
     y2.domain(y.domain());
-
-
-    focus.append("path")
-        .datum(d)
-        .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("stroke-width", 1.5)
-        .attr("class", "line")
-        .attr("d", line);
 
     focus.append("g")
         .attr("class", "axis axis--x")
@@ -144,6 +162,33 @@ function drawLineGraph(JSONresponse) {
         .style("text-anchor", "middle")
         .text(labelText);
 
+    // focus.append("path")
+    //     .data(formattedData)
+    //     .attr("fill", "none")
+    //     .attr("stroke", "steelblue")
+    //     .attr("stroke-linejoin", "round")
+    //     .attr("stroke-linecap", "round")
+    //     .attr("stroke-width", 1.5)
+    //     .attr("class", "line")
+    //     .attr("d", line);
+
+    var issue = focus.selectAll(".issue")
+        .data(formattedData) // Select nested data and append to new svg group elements
+        .enter().append("g")
+        .attr("class", "issue");
+
+    issue.append("path")
+        .attr("class", "line")
+        .style("pointer-events", "none") // Stop line interferring with cursor
+        .attr("id", function(d) {
+            return "line-" + d.year.replace(" ", "").replace("/", ""); // Give line id of line-(insert issue name, with any spaces replaced with no spaces)
+        })
+        .attr("d", function(d) {
+            return d.visible ? line(d.values) : null; // If array key "visible" = true then draw line, if not then don't 
+        })
+        .attr("clip-path", "url(#clip)") //use clip path to make irrelevant part invisible
+        .style("stroke", function(d) { return color(d.year); });
+
     svg.append("text")
         .attr("transform",
             "translate(" + ((width + margin.right + margin.left) / 2) + " ," +
@@ -152,7 +197,7 @@ function drawLineGraph(JSONresponse) {
         .text("Date");
 
     context.append("path")
-        .datum(d)
+        .data(formattedData)
         .attr("class", "line")
         .attr("d", line2)
 
