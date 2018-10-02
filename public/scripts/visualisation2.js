@@ -38,12 +38,15 @@ function submitParameters() {
         }
     });
     hideYearDropdown();
-
-    let startDate = requiredYears[0].toString() + '/01/01 00:00'; // start of the year
-    let endDate = requiredYears[0].toString() + '/12/31 23:59'; //end of the year
+    let startDate = [];
+    let endDate = [];
+    for (let i = 0; i < requiredYears.length; i++) {
+        startDate.push(requiredYears[i].toString() + '/01/01 00:00'); // start of the year
+        endDate.push(requiredYears[i].toString() + '/12/31 23:59'); //end of the year
+    }
     //let increment = '1h-avg';
-    console.log(resolution);
-    getData(selectedBuilding, startDate, endDate, resolution);
+    console.log(endDate);
+    getTimeData(selectedBuilding, startDate, endDate, resolution);
 }
 
 function drawLineGraph(JSONresponse) {
