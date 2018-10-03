@@ -171,7 +171,6 @@ function drawLineGraph(JSONresponse) {
     //console.log("formatted data is: ", formattedData);
 
     x.domain(d3.extent(d[0].dps, function(data) { return data[0]; }));
-    //y.domain(d3.extent(d[0].dps, function(data) { return data[1]; }));
     y.domain([0, d3.max(formattedData, function(c) { return d3.max(c.values, function(v) { return v.consumption; }); })]);
 
     x2.domain(x.domain());
@@ -207,15 +206,6 @@ function drawLineGraph(JSONresponse) {
             return line(data.values); // If array key "visible" = true then draw line, if not then don't 
         })
         .style("stroke", function(data) { return colour(data.year); });
-
-    // issue.append("text")
-    //     .datum(function(data) { return { year: data.year, value: data.values[data.values.length - 1] }; })
-    //     .attr("transform", function(data) { return "translate(" + (x(data.value.date) - 10) + "," + y(data.value.consumption) + ")"; })
-    //     .attr("x", 3)
-    //     .attr("dy", "0.35em")
-    //     .style("font", "10px sans-serif")
-    //     .text(function(data) { return data.year; })
-    //     .style("stroke", function(data) { return colour(data.year); });
 
     // draw legend
     let legendSpace = (380 - margin.top - margin.bottom) / 6;
