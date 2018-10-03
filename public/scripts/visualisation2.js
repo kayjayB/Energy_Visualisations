@@ -21,8 +21,8 @@ $(document).ready(function() {
             checkboxes[i].checked = false;
         }
     }
-
-    getMetrics();
+    let graphNumber = 2;
+    getMetrics(graphNumber);
 });
 
 function submitParameters() {
@@ -243,6 +243,14 @@ function drawLineGraph(JSONresponse) {
             (height + margin.top + margin.bottom) + ")")
         .style("text-anchor", "middle")
         .text("Date");
+
+    svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("text-decoration", "none")
+        .text(selectedBuilding);
 
     context.append("path")
         .data(formattedData)

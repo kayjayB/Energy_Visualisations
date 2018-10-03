@@ -6,19 +6,31 @@ let margin = { top: 20, right: 20, bottom: 110, left: 40 },
 let margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
     height2 = 400 - margin2.top - margin2.bottom;
 
-var resolution = "1h-avg";
+var resolution = "6h-avg";
 var units = "kVarh";
 
-let metric = 'WITS_13_Jubilee_Road_kVarh';
+//let metric = 'WITS_13_Jubilee_Road_kVarh';
+let metrics = [];
 let end = ('2018/09/01 00:00');
-let start = ('2017/08/30 00:00');
+let start = ('2018/01/01 00:00');
 
-// $(document).ready(function() {
+$(document).ready(function() {
 
-//     //getData(metric, start, end, increment);
-// });
+    //getData(metric, start, end, increment);
+});
 
-function drawLineGraph(JSONresponse) {
+function extractMetrics(JSONresponse) {
+    for (let i = 0; i < JSONresponse.length; i++) {
+        if (JSONresponse[i].includes(units)) {
+            metrics.push(JSONresponse[i]);
+        }
+    }
+    console.log(metrics)
+    getBuildingData(metrics, start, end, resolution);
+}
+
+function drawMultiLineGraph(JSONresponse) {
+    console.log(JSONresponse)
 
     var clear = d3.select('#my-visualisation');
     clear.selectAll("*").remove();
@@ -192,5 +204,6 @@ function increments() {
 }
 
 function submitParameters() {
-    getData(metric, start, end, resolution);
+    let graphNumber = 1;
+    getMetrics(graphNumber);
 }
