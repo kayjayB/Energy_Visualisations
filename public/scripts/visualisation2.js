@@ -215,25 +215,29 @@ function drawLineGraph(JSONresponse) {
         .style("text-anchor", "middle")
         .text("Date");
 
-    // context.append("path")
-    //     .data(formattedData)
-    //     .attr("class", "line")
-    //     .attr("d", line2)
+    context.append("path")
+        .data(formattedData)
+        .attr("class", "line")
+        .attr("d", function(data) {
+            return line2(data.values); // If array key "visible" = true then draw line, if not then don't 
+        })
 
-    // context.append("g")
-    //     .attr("class", "axis axis--x")
-    //     .attr("transform", "translate(0," + height2 + ")")
-    //     .call(xAxis2);
+    context.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(xAxis2);
 
-    // context.append("g")
-    //     .attr("class", "brush")
-    //     .call(brush)
-    //     .call(brush.move, x.range());
+    context.append("g")
+        .attr("class", "brush")
+        .call(brush)
+        .call(brush.move, x.range());
 
     function brushed() {
         var selection = d3.event.selection;
         x.domain(selection.map(x2.invert, x2));
-        focus.selectAll(".line").attr("d", line);
+        focus.selectAll(".line").attr("d", function(data) {
+            return line(data.values); // If array key "visible" = true then draw line, if not then don't 
+        })
         focus.select(".axis--x").call(d3.axisBottom(x));
     }
 
