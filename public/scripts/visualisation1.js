@@ -1,10 +1,17 @@
 let d;
-let margin = { top: 20, right: 20, bottom: 110, left: 40 },
+let margin = { top: 20, right: 30, bottom: 110, left: 50 },
     width = 700 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
 let margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
     height2 = 400 - margin2.top - margin2.bottom;
+
+// var margin = { top: 20, right: 50, bottom: 100, left: 50 },
+//     width = 960 - margin.left - margin.right,
+//     height = 500 - margin.top - margin.bottom;
+
+// var margin2 = { top: 430, right: 10, bottom: 20, left: 40 },
+//     height2 = 500 - margin2.top - margin2.bottom;
 
 var resolution = "6h-avg";
 var units = "kVarh";
