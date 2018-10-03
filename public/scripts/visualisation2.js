@@ -35,7 +35,16 @@ function submitParameters() {
     requiredYears = [];
     children.forEach(function(item) {
         if (item.checked == true) {
-            requiredYears.push(item.value);
+            if (item.value == 0) {
+                requiredYears.push("2013");
+                requiredYears.push("2014");
+                requiredYears.push("2015");
+                requiredYears.push("2016");
+                requiredYears.push("2017");
+                requiredYears.push("2018");
+                return;
+            } else
+                requiredYears.push(item.value);
         }
     });
     hideYearDropdown();
