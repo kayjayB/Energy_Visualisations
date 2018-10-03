@@ -1,4 +1,3 @@
-var d;
 var margin = { top: 20, right: 20, bottom: 110, left: 40 },
     width = 700 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
@@ -7,6 +6,8 @@ var selectedBuilding = "";
 var resolution = "1h-avg";
 var end = ('2018/09/01 00:00');
 var start = ('2017/08/30 00:00');
+
+let requiredYears = [];
 
 var margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
     height2 = 400 - margin2.top - margin2.bottom;
@@ -31,10 +32,19 @@ function submitParameters() {
     }
     let dropdown = document.getElementById("yearDropdown");
     let children = dropdown.childNodes;
-    let requiredYears = [];
+    requiredYears = [];
     children.forEach(function(item) {
         if (item.checked == true) {
-            requiredYears.push(item.value);
+            if (item.value == 0) {
+                requiredYears.push("2013");
+                requiredYears.push("2014");
+                requiredYears.push("2015");
+                requiredYears.push("2016");
+                requiredYears.push("2017");
+                requiredYears.push("2018");
+                return;
+            } else
+                requiredYears.push(item.value);
         }
     });
     hideYearDropdown();
@@ -44,8 +54,7 @@ function submitParameters() {
         startDate.push(requiredYears[i].toString() + '/01/01 00:00'); // start of the year
         endDate.push(requiredYears[i].toString() + '/12/31 23:59'); //end of the year
     }
-    //let increment = '1h-avg';
-    console.log(endDate);
+
     getTimeData(selectedBuilding, startDate, endDate, resolution);
 }
 
@@ -60,6 +69,7 @@ function drawLineGraph(JSONresponse) {
     } else if (labelText.match("kVarh")) {
         labelText = "Reactive Power (kVarh)"
     }
+
     var svg = d3.select('#visualisation2').append('svg')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -80,9 +90,9 @@ function drawLineGraph(JSONresponse) {
         .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
     var x = d3.scaleTime()
-        .rangeRound([0, width]);
+        .rangeRound([0, width - 40]);
     var x2 = d3.scaleTime()
-        .rangeRound([0, width]);
+        .rangeRound([0, width - 40]);
 
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
@@ -100,32 +110,72 @@ function drawLineGraph(JSONresponse) {
         ])
         .on("brush", brushed);
 
-    var line = d3.line()
-        .x(function(d) { return x(d[0]); })
-        .y(function(d) { return y(d[1]); });
-    var line2 = d3.line()
-        .x(function(d) { return x2(d[0]); })
-        .y(function(d) { return y2(d[1]); });
+    var line = d3.line().curve(d3.curveBasis)
+        .x(function(data) { return x(data.date); })
+        .y(function(data) { return y(data.consumption); });
 
-    d = JSONresponse;
-    d = d[0].dps;
+    var line2 = d3.line().curve(d3.curveBasis)
+        .x(function(data) { return x2(data.date); })
+        .y(function(data) { return y2(data.consumption); });
 
-    x.domain(d3.extent(d, function(data) { return data[0]; }));
-    y.domain(d3.extent(d, function(data) { return data[1]; }));
+    var parseTime = d3.timeFormat("%m-%d %H:%M"); // Extract date
+    var formatYear = d3.timeParse("%Y"); // Extract date
+    var parseYear = d3.timeFormat("%Y"); // Extract year
+    var formatDate = d3.timeFormat("%Y-%m-%d %H:%M"); // Extract year
+    var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+
+    let d = [];
+    for (let index = 0; index < JSONresponse.length; index++) {
+        d.push(JSONresponse[index][0]);
+    }
+
+    d.forEach(function(data) {
+        data.dps.forEach(function(e) { // Make every date in the csv data a javascript date object format
+            e[0] = new Date(e[0]);
+        });
+    });
+
+    for (let index = 0; index < d.length; index++) {
+        d[index].metric = parseYear(d[index].dps[0][0]); //requiredYears[index]; // Replace the metric name with the year
+    }
+
+    let year = formatYear("2016")
+    year = parseYear(year);
+    year = year + "-";
+    d.forEach(function(data) {
+        data.dps.forEach(function(e) { // Make every date in the csv data a javascript date object format
+            e[0] = year + parseTime(e[0]);
+            e[0] = new Date(e[0]);
+        });
+    });
+
+    var colour = d3.scaleOrdinal().range(d3.schemeCategory10);
+    colour.domain(d3.keys(requiredYears).filter(function(key) {
+        return key;
+    }));
+
+    let formattedData = colour.domain().map(function(funcData) { // Nest the data into an array of objects with new keys
+        return {
+            year: requiredYears[funcData],
+            values: d.find(function(element) { return element.metric == requiredYears[funcData]; }).dps.map(function(data) { // "values": which has an array of the dates and ratings
+                return {
+                    date: data[0],
+                    consumption: +data[1],
+                };
+            }),
+            //visible: (funcData === requiredYears[1] ? true : false)
+            visible: true
+        };
+    });
+
+    //console.log("formatted data is: ", formattedData);
+
+    x.domain(d3.extent(d[0].dps, function(data) { return data[0]; }));
+    //y.domain(d3.extent(d[0].dps, function(data) { return data[1]; }));
+    y.domain([0, d3.max(formattedData, function(c) { return d3.max(c.values, function(v) { return v.consumption; }); })]);
 
     x2.domain(x.domain());
     y2.domain(y.domain());
-
-
-    focus.append("path")
-        .datum(d)
-        .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("stroke-width", 1.5)
-        .attr("class", "line")
-        .attr("d", line);
 
     focus.append("g")
         .attr("class", "axis axis--x")
@@ -144,6 +194,49 @@ function drawLineGraph(JSONresponse) {
         .style("text-anchor", "middle")
         .text(labelText);
 
+    var issue = focus.selectAll(".issue")
+        .data(formattedData) // Select nested data and append to new svg group elements
+        .enter().append("g")
+        .attr("class", "issue");
+
+    issue.append("path")
+        .attr("class", "line")
+        .attr("fill", "none")
+        .style("pointer-events", "none") // Stop line interferring with cursor
+        .attr("d", function(data) {
+            return line(data.values); // If array key "visible" = true then draw line, if not then don't 
+        })
+        .style("stroke", function(data) { return colour(data.year); });
+
+    // issue.append("text")
+    //     .datum(function(data) { return { year: data.year, value: data.values[data.values.length - 1] }; })
+    //     .attr("transform", function(data) { return "translate(" + (x(data.value.date) - 10) + "," + y(data.value.consumption) + ")"; })
+    //     .attr("x", 3)
+    //     .attr("dy", "0.35em")
+    //     .style("font", "10px sans-serif")
+    //     .text(function(data) { return data.year; })
+    //     .style("stroke", function(data) { return colour(data.year); });
+
+    // draw legend
+    let legendSpace = (380 - margin.top - margin.bottom) / 6;
+
+    issue.append("rect")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("x", width + (margin.right / 3) - 35)
+        .attr("y", function(d, i) { return (legendSpace) + i * (legendSpace) - 8; }) // spacing
+        .attr("fill", function(data) {
+            return colour(data.year); // If array key "visible" = true then color rect, if not then make it grey 
+        })
+        .attr("class", "legend-box")
+
+    issue.append("text")
+        .attr("x", width + (margin.right / 3) - 20)
+        .attr("y", function(d, i) { return (legendSpace) + i * (legendSpace); })
+        .style("font", "11px sans-serif")
+        .text(function(data) { return data.year; });
+
+
     svg.append("text")
         .attr("transform",
             "translate(" + ((width + margin.right + margin.left) / 2) + " ," +
@@ -152,9 +245,11 @@ function drawLineGraph(JSONresponse) {
         .text("Date");
 
     context.append("path")
-        .datum(d)
+        .data(formattedData)
         .attr("class", "line")
-        .attr("d", line2)
+        .attr("d", function(data) {
+            return line2(data.values); // If array key "visible" = true then draw line, if not then don't 
+        })
 
     context.append("g")
         .attr("class", "axis axis--x")
@@ -169,7 +264,9 @@ function drawLineGraph(JSONresponse) {
     function brushed() {
         var selection = d3.event.selection;
         x.domain(selection.map(x2.invert, x2));
-        focus.selectAll(".line").attr("d", line);
+        focus.selectAll(".line").attr("d", function(data) {
+            return line(data.values); // If array key "visible" = true then draw line, if not then don't 
+        })
         focus.select(".axis--x").call(d3.axisBottom(x));
     }
 

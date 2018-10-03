@@ -176,8 +176,6 @@ text {
 .dropdown {
     position: relative;
     display: inline-block;
-    margin-right: 2%;
-    margin-left: 2%;
 }
 
 .dropdown-content {

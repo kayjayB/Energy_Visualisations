@@ -77,7 +77,7 @@ mainRouter.post('/getTimeData', function(req, res) {
                 }
                 results.push(data);
                 if (results.length == startDate.length) {
-                    console.log(results)
+                    //console.log(results)
                     res.send(results);
                 }
             });
