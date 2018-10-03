@@ -205,7 +205,8 @@ function drawLineGraph(JSONresponse) {
         .attr("x", 3)
         .attr("dy", "0.35em")
         .style("font", "10px sans-serif")
-        .text(function(data) { return data.year; });
+        .text(function(data) { return data.year; })
+        .style("stroke", function(data) { return colour(data.year); });
 
     svg.append("text")
         .attr("transform",
