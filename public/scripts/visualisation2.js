@@ -90,9 +90,9 @@ function drawLineGraph(JSONresponse) {
         .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
     var x = d3.scaleTime()
-        .rangeRound([0, width]);
+        .rangeRound([0, width - 40]);
     var x2 = d3.scaleTime()
-        .rangeRound([0, width]);
+        .rangeRound([0, width - 40]);
 
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
@@ -208,14 +208,34 @@ function drawLineGraph(JSONresponse) {
         })
         .style("stroke", function(data) { return colour(data.year); });
 
+    // issue.append("text")
+    //     .datum(function(data) { return { year: data.year, value: data.values[data.values.length - 1] }; })
+    //     .attr("transform", function(data) { return "translate(" + (x(data.value.date) - 10) + "," + y(data.value.consumption) + ")"; })
+    //     .attr("x", 3)
+    //     .attr("dy", "0.35em")
+    //     .style("font", "10px sans-serif")
+    //     .text(function(data) { return data.year; })
+    //     .style("stroke", function(data) { return colour(data.year); });
+
+    // draw legend
+    let legendSpace = (380 - margin.top - margin.bottom) / 6;
+
+    issue.append("rect")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("x", width + (margin.right / 3) - 35)
+        .attr("y", function(d, i) { return (legendSpace) + i * (legendSpace) - 8; }) // spacing
+        .attr("fill", function(data) {
+            return colour(data.year); // If array key "visible" = true then color rect, if not then make it grey 
+        })
+        .attr("class", "legend-box")
+
     issue.append("text")
-        .datum(function(data) { return { year: data.year, value: data.values[data.values.length - 1] }; })
-        .attr("transform", function(data) { return "translate(" + (x(data.value.date) - 10) + "," + y(data.value.consumption) + ")"; })
-        .attr("x", 3)
-        .attr("dy", "0.35em")
-        .style("font", "10px sans-serif")
-        .text(function(data) { return data.year; })
-        .style("stroke", function(data) { return colour(data.year); });
+        .attr("x", width + (margin.right / 3) - 20)
+        .attr("y", function(d, i) { return (legendSpace) + i * (legendSpace); })
+        .style("font", "11px sans-serif")
+        .text(function(data) { return data.year; });
+
 
     svg.append("text")
         .attr("transform",
