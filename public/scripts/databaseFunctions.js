@@ -51,3 +51,24 @@ function getTimeData(loggerName, startDate, endDate, increments) {
         }
     });
 }
+
+function getBuildingData(loggerName, startDate, endDate, increments) {
+    var payload = {
+        loggerName: loggerName,
+        startDate: startDate,
+        endDate: endDate,
+        increments: increments
+    };
+    $.ajax({
+        url: "/getBuildingData",
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        data: JSON.stringify(payload),
+        async: true,
+        success: function(resp) {
+            // console.log(resp)
+            drawMultiLineGraph(resp);
+        }
+    });
+}

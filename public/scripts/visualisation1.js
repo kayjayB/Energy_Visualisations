@@ -18,7 +18,7 @@ let start = ('2017/08/30 00:00');
 //     //getData(metric, start, end, increment);
 // });
 
-function drawLineGraph(JSONresponse) {
+function drawMultiLineGraph(JSONresponse) {
 
     var clear = d3.select('#my-visualisation');
     clear.selectAll("*").remove();
