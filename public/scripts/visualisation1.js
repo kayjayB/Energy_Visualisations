@@ -20,16 +20,27 @@ $(document).ready(function() {
 });
 
 function extractMetrics(JSONresponse) {
+    metrics = [];
     for (let i = 0; i < JSONresponse.length; i++) {
         if (JSONresponse[i].includes(units)) {
             metrics.push(JSONresponse[i]);
         }
     }
-    console.log(metrics)
     getBuildingData(metrics, start, end, resolution);
 }
 
+function formatNames(metricName) {
+    metricName = metricName.replace("WITS_", "");
+    metricName = metricName.replace("WC_", "");
+    metricName = metricName.replace("_kVarh", "");
+    metricName = metricName.replace("_kWh", "");
+    metricName = metricName.split('_').join(" ");
+    return metricName;
+}
+
 function drawMultiLineGraph(JSONresponse) {
+    var clear = d3.select('#my-visualisation');
+    clear.selectAll("*").remove();
     //console.log(JSONresponse)
     let labelText;
     if (units.match("kWh")) {
@@ -37,27 +48,17 @@ function drawMultiLineGraph(JSONresponse) {
     } else if (units.match("kVarh")) {
         labelText = "Reactive Power (kVarh)"
     }
-
-    var clear = d3.select('#my-visualisation');
-    clear.selectAll("*").remove();
+    let widthNew = width - 60;
 
     var svg = d3.select('#my-visualisation').append('svg')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .call(makeResponsive);
 
-    // svg.append("rect")
-    //     .attr("width", width-40)
-    //     .attr("height", height)
-    //     .attr("x", 0)
-    //     .attr("y", 0)
-    //     .attr("id", "mouse-tracker")
-    //     .style("fill", "white");
-
     svg.append("defs").append("clipPath")
         .attr("id", "clip")
         .append("rect")
-        .attr("width", width - 40)
+        .attr("width", widthNew)
         .attr("height", height);
 
     var focus = svg.append("g")
@@ -69,9 +70,9 @@ function drawMultiLineGraph(JSONresponse) {
         .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
     var x = d3.scaleTime()
-        .rangeRound([0, width - 40]);
+        .rangeRound([0, widthNew]);
     var x2 = d3.scaleTime()
-        .rangeRound([0, width - 40]);
+        .rangeRound([0, widthNew]);
 
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
@@ -85,7 +86,7 @@ function drawMultiLineGraph(JSONresponse) {
     var brush = d3.brushX()
         .extent([
             [0, 0],
-            [width, height2]
+            [widthNew, height2]
         ])
         .on("brush", brushed);
 
@@ -96,9 +97,6 @@ function drawMultiLineGraph(JSONresponse) {
     var line2 = d3.line().curve(d3.curveBasis)
         .x(function(data) { return x2(data.date); })
         .y(function(data) { return y2(data.consumption); });
-
-    // d = JSONresponse;
-    // d = d[0].dps;
 
     let d = [];
     for (let index = 0; index < JSONresponse.length; index++) {
@@ -115,6 +113,7 @@ function drawMultiLineGraph(JSONresponse) {
     colour.domain(d3.keys(metrics).filter(function(key) {
         return key;
     }));
+
 
     let formattedData = colour.domain().map(function(funcData) { // Nest the data into an array of objects with new keys
         return {
@@ -170,20 +169,20 @@ function drawMultiLineGraph(JSONresponse) {
     let legendSpace = (380 - margin.top - margin.bottom) / metrics.length;
 
     issue.append("rect")
-        .attr("width", 10)
-        .attr("height", 10)
-        .attr("x", width + (margin.right / 3) - 40)
-        .attr("y", function(d, i) { return (legendSpace) + i * (legendSpace) - 8; }) // spacing
+        .attr("width", 7)
+        .attr("height", 7)
+        .attr("x", width + (margin.right / 3) - 65)
+        .attr("y", function(d, i) { return (legendSpace) + i * (legendSpace) - 6; }) // spacing
         .attr("fill", function(data) {
             return colour(data.buildingName); // If array key "visible" = true then color rect, if not then make it grey 
         })
         .attr("class", "legend-box")
 
     issue.append("text")
-        .attr("x", width + (margin.right / 3) - 25)
+        .attr("x", width + (margin.right / 3) - 55)
         .attr("y", function(d, i) { return (legendSpace) + i * (legendSpace); })
-        .style("font", "8px sans-serif")
-        .text(function(data) { return data.buildingName; });
+        .style("font", "7px sans-serif")
+        .text(function(data) { return formatNames(data.buildingName); });
 
     svg.append("text")
         .attr("transform",

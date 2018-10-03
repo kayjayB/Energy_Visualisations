@@ -236,3 +236,16 @@ text {
 .text-muted {
     color: #909eaa !important;
 }
+
+#mouse-tracker {
+    stroke: #E6E7E8;
+    stroke-width: 1px;
+}
+
+.container-fluid {
+    padding: unset !important;
+}
+
+.col-2 {
+    max-width: 15%;
+}
