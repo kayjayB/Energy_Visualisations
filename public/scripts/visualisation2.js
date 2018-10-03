@@ -1,6 +1,9 @@
-var margin = { top: 20, right: 20, bottom: 110, left: 40 },
+let margin = { top: 20, right: 40, bottom: 110, left: 50 },
     width = 700 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
+
+let margin2 = { top: 330, right: 20, bottom: 30, left: 50 },
+    height2 = 400 - margin2.top - margin2.bottom;
 
 var selectedBuilding = "";
 var resolution = "1h-avg";
@@ -8,9 +11,6 @@ var end = ('2018/09/01 00:00');
 var start = ('2017/08/30 00:00');
 
 let requiredYears = [];
-
-var margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
-    height2 = 400 - margin2.top - margin2.bottom;
 
 $(document).ready(function() {
 

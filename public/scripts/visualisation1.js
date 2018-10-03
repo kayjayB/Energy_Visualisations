@@ -1,9 +1,9 @@
 let d;
-let margin = { top: 20, right: 30, bottom: 110, left: 50 },
+let margin = { top: 20, right: 40, bottom: 110, left: 50 },
     width = 700 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
-let margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
+let margin2 = { top: 330, right: 20, bottom: 30, left: 50 },
     height2 = 400 - margin2.top - margin2.bottom;
 
 // var margin = { top: 20, right: 50, bottom: 100, left: 50 },
@@ -55,7 +55,7 @@ function drawMultiLineGraph(JSONresponse) {
     } else if (units.match("kVarh")) {
         labelText = "Reactive Power (kVarh)"
     }
-    let widthNew = width - 60;
+    let widthNew = width - 70;
 
     var svg = d3.select('#my-visualisation').append('svg')
         .attr("width", width + margin.left + margin.right)
@@ -178,7 +178,7 @@ function drawMultiLineGraph(JSONresponse) {
     issue.append("rect")
         .attr("width", 7)
         .attr("height", 7)
-        .attr("x", width + (margin.right / 3) - 65)
+        .attr("x", width + (margin.right / 3) - 80)
         .attr("y", function(d, i) { return (legendSpace) + i * (legendSpace) - 6; }) // spacing
         .attr("fill", function(data) {
             return colour(data.buildingName); // If array key "visible" = true then color rect, if not then make it grey 
@@ -186,7 +186,7 @@ function drawMultiLineGraph(JSONresponse) {
         .attr("class", "legend-box")
 
     issue.append("text")
-        .attr("x", width + (margin.right / 3) - 55)
+        .attr("x", width + (margin.right / 3) - 70)
         .attr("y", function(d, i) { return (legendSpace) + i * (legendSpace); })
         .style("font", "7px sans-serif")
         .text(function(data) { return formatNames(data.buildingName); });
