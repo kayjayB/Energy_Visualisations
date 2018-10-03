@@ -78,7 +78,7 @@ mainRouter.post('/getBuildingData', function(req, res) {
                 }
                 results.push(data);
                 if (results.length == metrics.length) {
-                    //console.log(results)
+                    console.log(results)
                     res.send(results);
                 }
             });
