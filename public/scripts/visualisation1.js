@@ -46,10 +46,18 @@ function drawMultiLineGraph(JSONresponse) {
         .attr("height", height + margin.top + margin.bottom)
         .call(makeResponsive);
 
+    // svg.append("rect")
+    //     .attr("width", width-40)
+    //     .attr("height", height)
+    //     .attr("x", 0)
+    //     .attr("y", 0)
+    //     .attr("id", "mouse-tracker")
+    //     .style("fill", "white");
+
     svg.append("defs").append("clipPath")
         .attr("id", "clip")
         .append("rect")
-        .attr("width", width)
+        .attr("width", width - 40)
         .attr("height", height);
 
     var focus = svg.append("g")
@@ -164,7 +172,7 @@ function drawMultiLineGraph(JSONresponse) {
     issue.append("rect")
         .attr("width", 10)
         .attr("height", 10)
-        .attr("x", width + (margin.right / 3) - 35)
+        .attr("x", width + (margin.right / 3) - 40)
         .attr("y", function(d, i) { return (legendSpace) + i * (legendSpace) - 8; }) // spacing
         .attr("fill", function(data) {
             return colour(data.buildingName); // If array key "visible" = true then color rect, if not then make it grey 
@@ -172,9 +180,9 @@ function drawMultiLineGraph(JSONresponse) {
         .attr("class", "legend-box")
 
     issue.append("text")
-        .attr("x", width + (margin.right / 3) - 20)
+        .attr("x", width + (margin.right / 3) - 25)
         .attr("y", function(d, i) { return (legendSpace) + i * (legendSpace); })
-        .style("font", "10px sans-serif")
+        .style("font", "8px sans-serif")
         .text(function(data) { return data.buildingName; });
 
     svg.append("text")

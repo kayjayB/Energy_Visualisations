@@ -78,7 +78,7 @@ function drawLineGraph(JSONresponse) {
     svg.append("defs").append("clipPath")
         .attr("id", "clip")
         .append("rect")
-        .attr("width", width)
+        .attr("width", width - 40)
         .attr("height", height);
 
     var focus = svg.append("g")
