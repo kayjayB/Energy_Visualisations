@@ -8,11 +8,17 @@ $(document).ready(function() {
 
 
 function report() {
-
+    let notes = document.getElementById("notesBox").value;
+    let location = document.getElementById("location").value = "";
+    document.getElementById("notesBox").value = "";
+    document.getElementById("location").value = "";
+    let alertString = "Your report has been recorded.\n" + "Resource type: " + resourceName + ".\n Location: " + location + ".\n Description: " + notes + ".";
+    alert(alertString);
 }
 
 function cancel() {
     document.getElementById("notesBox").value = "";
+    document.getElementById("location").value = "";
 }
 
 function resources() {
