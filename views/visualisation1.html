@@ -78,60 +78,60 @@
                 <a href="/reportWastage" class="sidenavStyle list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-start align-items-center">
                         <span class="fa fa-flag mr-3"></span>
-                        <span class="menu-collapsed>Resource Wastage</span>
+                        <span class="menu-collapsed">Resource Wastage </span>
                     </div>
                 </a>
 
             </ul>
         </div>
 
-        <div class=" col py-3 ">
-            <div class="row ">
-                <div class="col-sm-3 ">
+        <div class="col py-3">
+            <div class="row">
+                <div class="col-sm-3">
                 </div>
 
-                <div class="col-sm-2 ">
-                    <div class="dropdown ">
-                        <button onclick="unitsSelector() " class="dropbtn btn btn-outline-primary ">Metric</button>
-                        <div id="unitsDropdown " class="dropdown-content ">
-                            <a id="kWh ">Energy (kWh)</a>
-                            <a id="kVarh ">Reactive Power (kVarh)</a>
+                <div class="col-sm-2">
+                    <div class="dropdown">
+                        <button onclick="unitsSelector()" class="dropbtn btn btn-outline-primary">Metric</button>
+                        <div id="unitsDropdown" class="dropdown-content">
+                            <a id="kWh">Energy (kWh)</a>
+                            <a id="kVarh">Reactive Power (kVarh)</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-2 ">
-                    <div class="dropdown ">
-                        <button onclick="years() " class="dropbtn btn btn-outline-primary ">Years</button>
-                        <div id="yearDropdown2 " class="dropdown-content ">
-                            <a id="all ">All</a>
-                            <a id="2013 ">2013</a>
-                            <a id="2014 ">2014</a>
-                            <a id="2015 ">2015</a>
-                            <a id="2016 ">2016</a>
-                            <a id="2017 ">2017</a>
-                            <a id="2018 ">2018</a>
+                <div class="col-sm-2">
+                    <div class="dropdown">
+                        <button onclick="years()" class="dropbtn btn btn-outline-primary">Years</button>
+                        <div id="yearDropdown2" class="dropdown-content">
+                            <a id="all">All</a>
+                            <a id="2013">2013</a>
+                            <a id="2014">2014</a>
+                            <a id="2015">2015</a>
+                            <a id="2016">2016</a>
+                            <a id="2017">2017</a>
+                            <a id="2018">2018</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-2 ">
-                    <div class="dropdown ">
-                        <button onclick="increments() " class="dropbtn btn btn-outline-primary ">Resolution</button>
-                        <div id="incrementDropdown " class="dropdown-content ">
-                            <a id="30m-avg ">30 Minutes</a>
-                            <a id="1h-avg ">1 Hour</a>
-                            <a id="6h-avg ">6 Hour</a>
-                            <a id="12h-avg ">12 Hour</a>
-                            <a id="1d-avg ">1 Day</a>
-                            <a id="30d-avg ">1 Month</a>
+                <div class="col-sm-2">
+                    <div class="dropdown">
+                        <button onclick="increments()" class="dropbtn btn btn-outline-primary">Resolution</button>
+                        <div id="incrementDropdown" class="dropdown-content">
+                            <a id="30m-avg">30 Minutes</a>
+                            <a id="1h-avg">1 Hour</a>
+                            <a id="6h-avg">6 Hour</a>
+                            <a id="12h-avg">12 Hour</a>
+                            <a id="1d-avg">1 Day</a>
+                            <a id="30d-avg">1 Month</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-3 ">
-                    <button onclick="submitParameters() " type="button " class="btn btn-outline-primary ">Draw my graph</button>
+                <div class="col-sm-3">
+                    <button onclick="submitParameters()" type="button" class="btn btn-outline-primary">Draw my graph</button>
                 </div>
             </div>
-            <div class="container-fluid ">
-                <div id="my-visualisation "></div>
+            <div class="container-fluid">
+                <div id="my-visualisation"></div>
             </div>
         </div>
     </div>

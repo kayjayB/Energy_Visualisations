@@ -2,6 +2,10 @@
     background-color: #22419b;
 }
 
+h2 {
+    color: #22419b;
+}
+
 .site-title {
     font-size: 20px;
     color: #ffffff !important;
@@ -221,15 +225,10 @@ text {
     cursor: pointer;
 }
 
+#unitsDropdown,
+#resourceType,
+#yearDropdown2,
 #incrementDropdown {
-    cursor: pointer;
-}
-
-#unitsDropdown {
-    cursor: pointer;
-}
-
-#yearDropdown2 {
     cursor: pointer;
 }
 
@@ -252,4 +251,29 @@ text {
 
 .col-2 {
     max-width: 15%;
+}
+
+.notesBoxWrapper {
+    padding: 10px;
+}
+
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#textarea-wrapper textarea.vertical {
+    resize: vertical;
+}
+
+.notes-text {
+    text-align: center;
+}
+
+.container2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
