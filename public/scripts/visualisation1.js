@@ -20,7 +20,7 @@ var units = "kVarh";
 let metrics = [];
 let end = ('2018/09/01 00:00');
 let start = ('2018/01/01 00:00');
-
+var requiredDateRange = "2018";
 $(document).ready(function() {
 
     //getData(metric, start, end, increment);
@@ -228,24 +228,24 @@ function drawMultiLineGraph(JSONresponse) {
 
 // *************   Dropdowns   *******************
 
-function createDropdown(Metrics) {
-    let dropdownContainer = document.getElementById("buildingDropdown");
+// function createDropdown(Metrics) {
+//     let dropdownContainer = document.getElementById("buildingDropdown");
 
-    for (let i = 0; i < Metrics.length; i++) {
-        let link = document.createElement("a");
-        link.className = "dropdownLink";
-        link.ID = "dropdownLink";
-        link.innerHTML = Metrics[i];
+//     for (let i = 0; i < Metrics.length; i++) {
+//         let link = document.createElement("a");
+//         link.className = "dropdownLink";
+//         link.ID = "dropdownLink";
+//         link.innerHTML = Metrics[i];
 
-        dropdownContainer.appendChild(link);
-    }
-}
+//         dropdownContainer.appendChild(link);
+//     }
+// }
 
 
-function buildings(ID) {
-    document.getElementById("buildingDropdown").classList.toggle("show");
-    hideYearDropdown();
-}
+// function buildings(ID) {
+//     document.getElementById("buildingDropdown").classList.toggle("show");
+//     hideYearDropdown();
+// }
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
@@ -255,6 +255,9 @@ window.onclick = function(event) {
         }
         if (event.target.parentNode.id.includes('unitsDropdown')) {
             units = event.target.id;
+        }
+        if (event.target.parentNode.id.includes('yearDropdown2')) {
+            requiredDateRange = event.target.id;
         }
         hideDropdown();
     }
@@ -281,5 +284,16 @@ function increments() {
 
 function submitParameters() {
     let graphNumber = 1;
+    if (requiredDateRange == "all") {
+        end = ('2018/12/31 23:59');
+        start = ('2013/01/01 00:00');
+    } else {
+        start = requiredDateRange.toString() + '/01/01 00:00'; // start of the year
+        end = requiredDateRange.toString() + '/12/31 23:59'; //end of the year
+    }
     getMetrics(graphNumber);
+}
+
+function years() {
+    document.getElementById("yearDropdown2").classList.toggle("show");
 }

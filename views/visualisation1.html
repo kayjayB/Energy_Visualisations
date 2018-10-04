@@ -87,10 +87,10 @@
 
         <div class="col py-3">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                 </div>
 
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                     <div class="dropdown">
                         <button onclick="unitsSelector()" class="dropbtn btn btn-outline-primary">Metric</button>
                         <div id="unitsDropdown" class="dropdown-content">
@@ -98,6 +98,22 @@
                             <a id="kVarh">Reactive Power (kVarh)</a>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="dropdown">
+                        <button onclick="years()" class="dropbtn btn btn-outline-primary">Years</button>
+                        <div id="yearDropdown2" class="dropdown-content">
+                            <a id="all">All</a>
+                            <a id="2013">2013</a>
+                            <a id="2014">2014</a>
+                            <a id="2015">2015</a>
+                            <a id="2016">2016</a>
+                            <a id="2017">2017</a>
+                            <a id="2018">2018</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
                     <div class="dropdown">
                         <button onclick="increments()" class="dropbtn btn btn-outline-primary">Resolution</button>
                         <div id="incrementDropdown" class="dropdown-content">
@@ -110,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button onclick="submitParameters()" type="button" class="btn btn-outline-primary">Draw my graph</button>
                 </div>
             </div>
