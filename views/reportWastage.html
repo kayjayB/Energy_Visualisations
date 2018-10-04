@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/cdn/css/bootstrap.css">
     <link rel="stylesheet" href="/cdn/css/landingPage.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="/cdn/libraries/jquery.js"></script>
     <script src="/cdn/libraries/bootstrap.min.js"></script>
     <script src="/cdn/libraries/d3.min.js"></script>
@@ -16,12 +16,12 @@
 
 <body>
     <nav class="navbar navbar-default navbar-expand-md fixed-top">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"><i class="fa fa-navicon"></i></span>
-        </button>
         <a class="navbar-brand" href="/">
             <span class="site-title menu-collapsed">ENERGY VISUALISATIONS</span>
         </a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"><i class="fa fa-navicon"></i></span>
+        </button>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
@@ -95,10 +95,14 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-3 container2">
-                        <p id="selectedResource">Type of Wastage</p>
+                    <div class="col-sm-6">
+                        <p id="selectedResource"><b>Resource Type</b></p>
                     </div>
-                    <div class="col-sm-3 container2">
+                    <div class="col-sm-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6 container2 selectContainer">
                         <select>
                             <option selected hidden>Choose Type</option>
                             <option value="Water">Water</option>
@@ -106,14 +110,32 @@
                             <option value="Other">Other</option>
                         </select>
                     </div>
-
                     <div class="col-sm-3"></div>
                 </div>
-                <p></p>
                 <div class="row">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-6">
-                        <span>Description </span>
+                        <span><b>Location</b></span>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6 container2 locationBox">
+                        <input type="text" id="location" value=""> </input>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <span><b>Description</b></span>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
                         <div class="notesBoxWrapper">
                             <textarea rows="5" cols="30" id="notesBox" placeholder=""></textarea>
                         </div>
