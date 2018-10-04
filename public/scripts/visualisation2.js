@@ -106,7 +106,7 @@ function drawLineGraph(JSONresponse) {
     var brush = d3.brushX()
         .extent([
             [0, 0],
-            [width, height2]
+            [width - 40, height2]
         ])
         .on("brush", brushed);
 
