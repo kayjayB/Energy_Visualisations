@@ -1,6 +1,9 @@
-var margin = { top: 20, right: 20, bottom: 110, left: 40 },
+let margin = { top: 20, right: 40, bottom: 110, left: 50 },
     width = 700 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
+
+let margin2 = { top: 330, right: 20, bottom: 30, left: 50 },
+    height2 = 400 - margin2.top - margin2.bottom;
 
 var selectedBuilding = "";
 var resolution = "1h-avg";
@@ -8,9 +11,6 @@ var end = ('2018/09/01 00:00');
 var start = ('2017/08/30 00:00');
 
 let requiredYears = [];
-
-var margin2 = { top: 330, right: 20, bottom: 30, left: 40 },
-    height2 = 400 - margin2.top - margin2.bottom;
 
 $(document).ready(function() {
 
@@ -78,7 +78,7 @@ function drawLineGraph(JSONresponse) {
     svg.append("defs").append("clipPath")
         .attr("id", "clip")
         .append("rect")
-        .attr("width", width)
+        .attr("width", width - 40)
         .attr("height", height);
 
     var focus = svg.append("g")
@@ -106,7 +106,7 @@ function drawLineGraph(JSONresponse) {
     var brush = d3.brushX()
         .extent([
             [0, 0],
-            [width, height2]
+            [width - 40, height2]
         ])
         .on("brush", brushed);
 
@@ -171,7 +171,6 @@ function drawLineGraph(JSONresponse) {
     //console.log("formatted data is: ", formattedData);
 
     x.domain(d3.extent(d[0].dps, function(data) { return data[0]; }));
-    //y.domain(d3.extent(d[0].dps, function(data) { return data[1]; }));
     y.domain([0, d3.max(formattedData, function(c) { return d3.max(c.values, function(v) { return v.consumption; }); })]);
 
     x2.domain(x.domain());
@@ -207,15 +206,6 @@ function drawLineGraph(JSONresponse) {
             return line(data.values); // If array key "visible" = true then draw line, if not then don't 
         })
         .style("stroke", function(data) { return colour(data.year); });
-
-    // issue.append("text")
-    //     .datum(function(data) { return { year: data.year, value: data.values[data.values.length - 1] }; })
-    //     .attr("transform", function(data) { return "translate(" + (x(data.value.date) - 10) + "," + y(data.value.consumption) + ")"; })
-    //     .attr("x", 3)
-    //     .attr("dy", "0.35em")
-    //     .style("font", "10px sans-serif")
-    //     .text(function(data) { return data.year; })
-    //     .style("stroke", function(data) { return colour(data.year); });
 
     // draw legend
     let legendSpace = (380 - margin.top - margin.bottom) / 6;
