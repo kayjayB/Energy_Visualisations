@@ -228,25 +228,6 @@ function drawMultiLineGraph(JSONresponse) {
 
 // *************   Dropdowns   *******************
 
-// function createDropdown(Metrics) {
-//     let dropdownContainer = document.getElementById("buildingDropdown");
-
-//     for (let i = 0; i < Metrics.length; i++) {
-//         let link = document.createElement("a");
-//         link.className = "dropdownLink";
-//         link.ID = "dropdownLink";
-//         link.innerHTML = Metrics[i];
-
-//         dropdownContainer.appendChild(link);
-//     }
-// }
-
-
-// function buildings(ID) {
-//     document.getElementById("buildingDropdown").classList.toggle("show");
-//     hideYearDropdown();
-// }
-
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {

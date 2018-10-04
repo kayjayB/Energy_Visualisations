@@ -86,16 +86,55 @@
 
         <div class="col py-3">
             <div class="container" id="text">
-                <h2 style="padding-bottom: 30px">Enter the name of your shopping list</h2>
-                <input type="text" id="listName" value=""> </input>
-                <p></p>
-                <!-- <button type="button" class="btn main-btn" onclick="viewList()" oninput="toggleLinkSubmit()" disabled="true" id="navigateToLink"> View</button> -->
-                <button type="button" class="loadButton" onclick="saveListName()" id="saveListName"> Save</button>
-                <p></p>
-                <button type="button" class="loadButton" onclick="cancelAddName()" id="cancel"> Cancel</button>
-            </div>
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <h2 style="padding-bottom: 30px; text-align: center">Report Resource Wastage</h2>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3 container2">
+                        <p id="selectedResource">Type of Wastage</p>
+                    </div>
+                    <div class="col-sm-3 container2">
+                        <select>
+                            <option selected hidden>Choose Type</option>
+                            <option value="Water">Water</option>
+                            <option value="Electricity">Electricity</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
 
+                    <div class="col-sm-3"></div>
+                </div>
+                <p></p>
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <span>Description </span>
+                        <div class="notesBoxWrapper">
+                            <textarea rows="5" cols="30" id="notesBox" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            </div>
+            <p></p>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3 container2">
+                    <button type="button" class="btn btn-outline-primary" onclick="report()" id="saveListName">Save</button>
+                </div>
+                <div class="col-sm-3 container2">
+                    <button type="button" class="btn btn-outline-primary" onclick="cancel()" id="cancel">Clear</button>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
         </div>
+
+    </div>
     </div>
 </body>
 
