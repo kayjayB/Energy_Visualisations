@@ -278,7 +278,7 @@ function createDropdown(Metrics) {
     for (let i = 0; i < Metrics.length; i++) {
         let link = document.createElement("a");
         link.className = "dropdownLink";
-        link.ID = "dropdownLink";
+        link.id = "dropdownLink";
         link.innerHTML = Metrics[i];
 
         dropdownContainer.appendChild(link);
