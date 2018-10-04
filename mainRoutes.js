@@ -24,6 +24,10 @@ mainRouter.get('/visualisation2', function(req, res) {
     res.sendFile(path.join(__dirname, 'views', 'visualisation2.html'));
 });
 
+mainRouter.get('/reportWastage', function(req, res) {
+    res.sendFile(path.join(__dirname, 'views', 'reportWastage.html'));
+});
+
 mainRouter.post('/getData', function(req, res) {
     mQuery
         .aggregator('sum')
