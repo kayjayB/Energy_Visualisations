@@ -13,17 +13,18 @@ let margin2 = { top: 330, right: 20, bottom: 30, left: 50 },
 // var margin2 = { top: 430, right: 10, bottom: 20, left: 40 },
 //     height2 = 500 - margin2.top - margin2.bottom;
 
-var resolution = "6h-avg";
+var resolution = "12h-avg";
 var units = "kVarh";
 
 //let metric = 'WITS_13_Jubilee_Road_kVarh';
 let metrics = [];
-let end = ('2018/09/01 00:00');
+let end = ('2018/12/31 23:59');
 let start = ('2018/01/01 00:00');
 var requiredDateRange = "2018";
 $(document).ready(function() {
-
+    let graphNumber = 1;
     //getData(metric, start, end, increment);
+    getMetrics(graphNumber);
 });
 
 function extractMetrics(JSONresponse) {
@@ -198,6 +199,14 @@ function drawMultiLineGraph(JSONresponse) {
         .style("text-anchor", "middle")
         .text("Date");
 
+    svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("text-decoration", "none")
+        .text(requiredDateRange);
+
     context.append("path")
         .data(formattedData)
         .attr("class", "line")
@@ -265,7 +274,7 @@ function increments() {
 
 function submitParameters() {
     let graphNumber = 1;
-    if (requiredDateRange == "all") {
+    if (requiredDateRange == "2013-2018") {
         end = ('2018/12/31 23:59');
         start = ('2013/01/01 00:00');
     } else {

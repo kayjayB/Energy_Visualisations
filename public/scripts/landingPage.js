@@ -22,7 +22,7 @@ function drawDashboard() {
         .attr("height", height + margin.top + margin.bottom)
         .call(makeResponsive);
 
-    var radius = 40;
+    var radius = 50;
 
     d3.json("/cdn/data/graphNames.json").then(function(data) {
         var circles = d3.range(10).map(function() {
@@ -60,7 +60,7 @@ function drawDashboard() {
             .attr("cursor", "pointer");
 
         elemEnter.append('text')
-            .attr("x", function(d) { return d.x - radius / 1.5; })
+            .attr("x", function(d) { return d.x - radius / 1.2; })
             .attr("y", function(d) { return d.y; })
             .text(function(d) { return d.name })
             .attr({
@@ -80,7 +80,7 @@ function dragstarted(d) {
 }
 
 function dragged(d) {
-    d3.select(this).select("text").attr("x", d.x = d3.event.x - 40 / 1.5).attr("y", d.y = d3.event.y);
+    d3.select(this).select("text").attr("x", d.x = d3.event.x - 50 / 1.2).attr("y", d.y = d3.event.y);
     d3.select(this).select("circle").attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
 }
 

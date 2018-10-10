@@ -10,16 +10,23 @@
     <script src="/cdn/libraries/jquery.js"></script>
     <script src="/cdn/libraries/bootstrap.min.js"></script>
     <script src="/cdn/libraries/d3.min.js"></script>
-    <script src="/cdn/scripts/visualisation1.js"></script>
-    <script src="/cdn/scripts/graphHelpers.js"></script>
-    <script src="/cdn/scripts/databaseFunctions.js"></script>
+    <script defer src="/cdn/scripts/visualisation1.js"></script>
+    <script defer src="/cdn/scripts/databaseFunctions.js"></script>
+    <script defer src="/cdn/scripts/graphHelpers.js"></script>
 </head>
 
 <body>
     <nav class="navbar navbar-default navbar-expand-md fixed-top">
-        <a class="navbar-brand" href="/">
-            <span class="site-title menu-collapsed">ENERGY VISUALISATIONS</span>
-        </a>
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <a class="navbar-brand" href="/">
+                <span>
+                    <img class="title-image" src="/cdn/img/image.png"></img>
+                </span>
+                <span class="site-title menu-collapsed">ENERGY VISUALISATIONS</span>
+            </a>
+        </div>
+        <div class="col-sm-3"></div>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"><i class="fa fa-navicon"></i></span>
         </button>
@@ -103,7 +110,7 @@
                     <div class="dropdown">
                         <button onclick="years()" class="dropbtn btn btn-outline-primary">Years</button>
                         <div id="yearDropdown2" class="dropdown-content">
-                            <a id="all">All</a>
+                            <a id="2013-2018">All</a>
                             <a id="2013">2013</a>
                             <a id="2014">2014</a>
                             <a id="2015">2015</a>

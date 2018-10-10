@@ -5,10 +5,10 @@ let margin = { top: 20, right: 40, bottom: 110, left: 50 },
 let margin2 = { top: 330, right: 20, bottom: 30, left: 50 },
     height2 = 400 - margin2.top - margin2.bottom;
 
-var selectedBuilding = "";
-var resolution = "1h-avg";
-var end = ('2018/09/01 00:00');
-var start = ('2017/08/30 00:00');
+var selectedBuilding = "WITS_WC_Barnato_Sub_TRF_2_kWh";
+var resolution = "12h-avg";
+var end = ('2018/12/31 23:59');
+var start = ('2018/01/01 00:00');
 
 let requiredYears = [];
 
@@ -23,6 +23,19 @@ $(document).ready(function() {
     }
     let graphNumber = 2;
     getMetrics(graphNumber);
+
+    var selectedBuilding2 = "WITS_WC_Barnato_Sub_TRF_2_kWh";
+    var resolution2 = "12h-avg";
+
+    requiredYears = [2017, 2018];
+    let startDate = [];
+    let endDate = [];
+    for (let i = 0; i < requiredYears.length; i++) {
+        startDate.push(requiredYears[i].toString() + '/01/01 00:00'); // start of the year
+        endDate.push(requiredYears[i].toString() + '/12/31 23:59'); //end of the year
+    }
+
+    getTimeData(selectedBuilding2, startDate, endDate, resolution2);
 });
 
 function submitParameters() {
@@ -56,6 +69,16 @@ function submitParameters() {
     }
 
     getTimeData(selectedBuilding, startDate, endDate, resolution);
+}
+
+
+function formatNames(metricName) {
+    metricName = metricName.replace("WITS_", "");
+    metricName = metricName.replace("WC_", "");
+    metricName = metricName.replace("_kVarh", "");
+    metricName = metricName.replace("_kWh", "");
+    metricName = metricName.split('_').join(" ");
+    return metricName;
 }
 
 function drawLineGraph(JSONresponse) {
@@ -234,13 +257,14 @@ function drawLineGraph(JSONresponse) {
         .style("text-anchor", "middle")
         .text("Date");
 
+    let graphTitle = formatNames(selectedBuilding);
     svg.append("text")
         .attr("x", (width / 2))
         .attr("y", 20)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("text-decoration", "none")
-        .text(selectedBuilding);
+        .text(graphTitle);
 
     context.append("path")
         .data(formattedData)

@@ -7,8 +7,17 @@ h2 {
 }
 
 .site-title {
-    font-size: 20px;
+    font-size: 35px;
     color: #ffffff !important;
+}
+
+.title-image {
+    height: 60px;
+}
+
+img {
+    vertical-align: top;
+    border-style: none;
 }
 
 .line {
@@ -25,11 +34,12 @@ h2 {
 }
 
 body {
-    padding-top: 56px;
+    padding-top: 86px;
 }
 
 .sticky-offset {
-    top: 56px;
+    /* top: 77px; */
+    top: 86px;
 }
 
 #body-row {
