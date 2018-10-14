@@ -24,13 +24,13 @@ function setUpDashboard() {
     var link = document.getElementById('metricsButton');
     link.style.display = 'none';
 
-    var link = document.getElementById('submitButton');
+    link = document.getElementById('submitButton');
     link.style.display = 'none';
 
-    var link = document.getElementById('resButton');
+    link = document.getElementById('resButton');
     link.style.display = 'none';
 
-    var link = document.getElementById('yearsButton');
+    link = document.getElementById('yearsButton');
     link.style.display = 'none';
 
     drawDashboard();
@@ -114,21 +114,21 @@ function dragended(d) {
 
 function visualisation1() {
     clearGraph();
-    var link = document.getElementById('metricsButton');
+    let link = document.getElementById('metricsButton');
     link.style.display = 'block';
     link.innerHTML = "Metric";
     clearChildren("unitsDropdown");
     makeUnitsDropdown();
     link.setAttribute("onclick", "unitsSelector();");
 
-    var link = document.getElementById('submitButton');
+    link = document.getElementById('submitButton');
     link.style.display = 'block';
     link.setAttribute("onclick", "submitParameters1();");
 
-    var link = document.getElementById('resButton');
+    link = document.getElementById('resButton');
     link.style.display = 'block';
 
-    var link = document.getElementById('yearsButton');
+    link = document.getElementById('yearsButton');
     link.style.display = 'block';
     link.setAttribute("onclick", "years();");
 
@@ -145,20 +145,20 @@ function visualisation1() {
 
 function visualisation2() {
     clearGraph();
-    var link = document.getElementById('metricsButton');
+    let link = document.getElementById('metricsButton');
     link.style.display = 'block';
     link.innerHTML = "Residence";
     clearChildren("unitsDropdown");
     link.setAttribute("onclick", "buildings();");
 
-    var link = document.getElementById('submitButton');
+    link = document.getElementById('submitButton');
     link.style.display = 'block';
     link.setAttribute("onclick", "submitParameters2();");
 
-    var link = document.getElementById('resButton');
+    link = document.getElementById('resButton');
     link.style.display = 'block';
 
-    var link = document.getElementById('yearsButton');
+    link = document.getElementById('yearsButton');
     link.style.display = 'block';
     link.setAttribute("onclick", "years2();");
     if (document.getElementById('yearDropdown2')) {
@@ -168,9 +168,9 @@ function visualisation2() {
 
     makecheckBoxes();
 
-    var checkboxes = document.getElementsByTagName('input');
+    let checkboxes = document.getElementsByTagName('input');
 
-    for (var i = 0; i < checkboxes.length; i++) {
+    for (let i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].type == 'checkbox') {
             checkboxes[i].checked = false;
         }
@@ -178,8 +178,8 @@ function visualisation2() {
     graphNumber = 2;
     getMetrics(graphNumber);
 
-    var selectedBuilding2 = "WITS_WC_Barnato_Sub_TRF_2_kWh";
-    var resolution2 = "12h-avg";
+    let selectedBuilding2 = "WITS_WC_Barnato_Sub_TRF_2_kWh";
+    let resolution2 = "12h-avg";
 
     requiredYears = [2017, 2018];
     let startDate = [];
@@ -213,11 +213,11 @@ function makecheckBoxes() {
     checkBoxContanier.appendChild(document.createElement("br"));
 
     for (let i = 2013; i < 2018; i++) {
-        let input = document.createElement("input");
+        input = document.createElement("input");
         input.type = "checkbox";
         input.value = i;
         input.id = i;
-        let text = document.createTextNode(i);
+        text = document.createTextNode(i);
         checkBoxContanier.appendChild(input);
         checkBoxContanier.appendChild(text);
         checkBoxContanier.appendChild(document.createElement("br"));
