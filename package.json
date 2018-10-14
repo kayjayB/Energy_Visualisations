@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "compression": "^1.7.3",
     "express": "^4.16.2",
     "opentsdb": "^0.5.7",
     "opentsdb-client": "0.0.4",
