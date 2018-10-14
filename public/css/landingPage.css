@@ -49,7 +49,8 @@ body {
 
 #sidebar-container {
     min-height: 100vh;
-    background-color: #22419BB3;
+    /* background-color: #22419BB3; */
+    background-color: #22419b;
     padding: 0;
 }
 
@@ -247,7 +248,7 @@ text {
 }
 
 .text-muted {
-    color: #909eaa !important;
+    color: #a2abb3 !important;
 }
 
 #mouse-tracker {
