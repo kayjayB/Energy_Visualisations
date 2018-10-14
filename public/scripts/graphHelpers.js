@@ -17,3 +17,8 @@ function makeResponsive(svg) {
         svg.attr("height", Math.round(targetWidth / aspectRatio));
     }
 }
+
+function clearGraph() {
+    var clear = d3.select('#dashboardAnimation');
+    clear.selectAll("*").remove();
+}

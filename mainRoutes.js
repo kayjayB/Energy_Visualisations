@@ -16,14 +16,6 @@ mainRouter.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'views', 'landingPage.html'));
 });
 
-mainRouter.get('/visualisation1', function(req, res) {
-    res.sendFile(path.join(__dirname, 'views', 'visualisation1.html'));
-});
-
-mainRouter.get('/visualisation2', function(req, res) {
-    res.sendFile(path.join(__dirname, 'views', 'visualisation2.html'));
-});
-
 mainRouter.get('/reportWastage', function(req, res) {
     res.sendFile(path.join(__dirname, 'views', 'reportWastage.html'));
 });

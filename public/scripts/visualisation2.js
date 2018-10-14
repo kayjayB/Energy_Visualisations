@@ -1,44 +1,9 @@
-let margin = { top: 20, right: 40, bottom: 110, left: 50 },
-    width = 700 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
-
-let margin2 = { top: 330, right: 20, bottom: 30, left: 50 },
-    height2 = 400 - margin2.top - margin2.bottom;
-
 var selectedBuilding = "WITS_WC_Barnato_Sub_TRF_2_kWh";
 var resolution = "12h-avg";
-var end = ('2018/12/31 23:59');
-var start = ('2018/01/01 00:00');
 
 let requiredYears = [];
 
-$(document).ready(function() {
-
-    var checkboxes = document.getElementsByTagName('input');
-
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].type == 'checkbox') {
-            checkboxes[i].checked = false;
-        }
-    }
-    let graphNumber = 2;
-    getMetrics(graphNumber);
-
-    var selectedBuilding2 = "WITS_WC_Barnato_Sub_TRF_2_kWh";
-    var resolution2 = "12h-avg";
-
-    requiredYears = [2017, 2018];
-    let startDate = [];
-    let endDate = [];
-    for (let i = 0; i < requiredYears.length; i++) {
-        startDate.push(requiredYears[i].toString() + '/01/01 00:00'); // start of the year
-        endDate.push(requiredYears[i].toString() + '/12/31 23:59'); //end of the year
-    }
-
-    getTimeData(selectedBuilding2, startDate, endDate, resolution2);
-});
-
-function submitParameters() {
+function submitParameters2() {
     if (selectedBuilding == "") {
         alert("Please select a building");
         return;
@@ -82,7 +47,7 @@ function formatNames(metricName) {
 }
 
 function drawLineGraph(JSONresponse) {
-    var clear = d3.select('#visualisation2');
+    var clear = d3.select('#dashboardAnimation');
     clear.selectAll("*").remove();
 
     let labelTextIndex = selectedBuilding.lastIndexOf("_");
@@ -93,7 +58,7 @@ function drawLineGraph(JSONresponse) {
         labelText = "Reactive Power (kVarh)"
     }
 
-    var svg = d3.select('#visualisation2').append('svg')
+    var svg = d3.select('#dashboardAnimation').append('svg')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .call(makeResponsive);
@@ -297,7 +262,7 @@ function drawLineGraph(JSONresponse) {
 // *************   Dropdowns   *******************
 
 function createDropdown(Metrics) {
-    let dropdownContainer = document.getElementById("buildingDropdown");
+    let dropdownContainer = document.getElementById("unitsDropdown");
 
     for (let i = 0; i < Metrics.length; i++) {
         let link = document.createElement("a");
@@ -311,23 +276,36 @@ function createDropdown(Metrics) {
 
 
 function buildings(ID) {
-    document.getElementById("buildingDropdown").classList.toggle("show");
+    document.getElementById("unitsDropdown").classList.toggle("show");
     hideYearDropdown();
 }
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
-        if (event.target.parentNode.id.includes('buildingDropdown')) {
-            selectedBuilding = event.target.innerHTML;
-        } else if (event.target.parentNode.id.includes('incrementDropdown')) {
-            resolution = event.target.id;
+        if (graphNumber == 2) {
+            if (event.target.parentNode.id.includes('unitsDropdown')) {
+                selectedBuilding = event.target.innerHTML;
+            } else if (event.target.parentNode.id.includes('incrementDropdown')) {
+                resolution = event.target.id;
+            }
+        } else if (graphNumber == 1) {
+            if (event.target.parentNode.id.includes('incrementDropdown')) {
+                resolution = event.target.id;
+            }
+            if (event.target.parentNode.id.includes('unitsDropdown')) {
+                units = event.target.id;
+            }
+            if (event.target.parentNode.id.includes('yearDropdown2')) {
+                console.log(event.target.id)
+                requiredDateRange = event.target.id;
+            }
         }
         hideDropdown();
     }
 }
 
-function years() {
+function years2() {
     document.getElementById("yearDropdown").classList.toggle("show");
 }
 

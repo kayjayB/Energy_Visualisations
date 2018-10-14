@@ -1,31 +1,11 @@
-let d;
-let margin = { top: 20, right: 40, bottom: 110, left: 50 },
-    width = 700 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
-
-let margin2 = { top: 330, right: 20, bottom: 30, left: 50 },
-    height2 = 400 - margin2.top - margin2.bottom;
-
-// var margin = { top: 20, right: 50, bottom: 100, left: 50 },
-//     width = 960 - margin.left - margin.right,
-//     height = 500 - margin.top - margin.bottom;
-
-// var margin2 = { top: 430, right: 10, bottom: 20, left: 40 },
-//     height2 = 500 - margin2.top - margin2.bottom;
-
 var resolution = "12h-avg";
 var units = "kVarh";
 
 //let metric = 'WITS_13_Jubilee_Road_kVarh';
 let metrics = [];
-let end = ('2018/12/31 23:59');
-let start = ('2018/01/01 00:00');
+
 var requiredDateRange = "2018";
-$(document).ready(function() {
-    let graphNumber = 1;
-    //getData(metric, start, end, increment);
-    getMetrics(graphNumber);
-});
+
 
 function extractMetrics(JSONresponse) {
     metrics = [];
@@ -34,7 +14,9 @@ function extractMetrics(JSONresponse) {
             metrics.push(JSONresponse[i]);
         }
     }
+    console.log(start)
     getBuildingData(metrics, start, end, resolution);
+
 }
 
 function formatNames(metricName) {
@@ -47,9 +29,9 @@ function formatNames(metricName) {
 }
 
 function drawMultiLineGraph(JSONresponse) {
-    var clear = d3.select('#my-visualisation');
+    var clear = d3.select('#dashboardAnimation');
     clear.selectAll("*").remove();
-    //console.log(JSONresponse)
+
     let labelText;
     if (units.match("kWh")) {
         labelText = "Energy (kWh)"
@@ -58,7 +40,7 @@ function drawMultiLineGraph(JSONresponse) {
     }
     let widthNew = width - 70;
 
-    var svg = d3.select('#my-visualisation').append('svg')
+    var svg = d3.select('#dashboardAnimation').append('svg')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .call(makeResponsive);
@@ -235,24 +217,6 @@ function drawMultiLineGraph(JSONresponse) {
 
 }
 
-// *************   Dropdowns   *******************
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-        if (event.target.parentNode.id.includes('incrementDropdown')) {
-            resolution = event.target.id;
-        }
-        if (event.target.parentNode.id.includes('unitsDropdown')) {
-            units = event.target.id;
-        }
-        if (event.target.parentNode.id.includes('yearDropdown2')) {
-            requiredDateRange = event.target.id;
-        }
-        hideDropdown();
-    }
-}
-
 function unitsSelector() {
     document.getElementById("unitsDropdown").classList.toggle("show");
 }
@@ -272,7 +236,7 @@ function increments() {
     document.getElementById("incrementDropdown").classList.toggle("show");
 }
 
-function submitParameters() {
+function submitParameters1() {
     let graphNumber = 1;
     if (requiredDateRange == "2013-2018") {
         end = ('2018/12/31 23:59');

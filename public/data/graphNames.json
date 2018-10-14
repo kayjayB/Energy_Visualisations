@@ -1,7 +1,7 @@
 {
     "children": [
-        { "name": "Buildings", "address": "/visualisation1" },
-        { "name": "Date Ranges", "address": "/visualisation2" },
+        { "name": "Buildings", "address": "visualisation1" },
+        { "name": "Date Ranges", "address": "visualisation2" },
         { "name": "Graph 3", "address": "#" },
         { "name": "Graph 4", "address": "#" },
         { "name": "Graph 5", "address": "#" },

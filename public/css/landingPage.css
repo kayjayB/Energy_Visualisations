@@ -55,7 +55,7 @@ body {
 }
 
 
-/* Sidebar sizes when expanded and expanded */
+/* Sidebar sizes when expanded and collapsed */
 
 .sidebar-expanded {
     width: 230px;
@@ -89,17 +89,17 @@ body {
 /* Separators */
 
 .sidebar-separator-title {
-    background-color: #22419BB3;
+    background-color: #22419b;
     height: 35px;
 }
 
 .sidebar-separator {
-    background-color: #22419BB3;
+    background-color: #22419b;
     height: 25px;
 }
 
 .logo-separator {
-    background-color: #22419BB3;
+    background-color: #22419b;
     height: 60px;
 }
 
@@ -124,7 +124,7 @@ body {
 }
 
 .sidenavStyle {
-    background-color: #22419BB3;
+    background-color: #22419b;
 }
 
 .list-group-item-action:hover,
@@ -319,4 +319,88 @@ select {
 .selectContainer {
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+.site-title {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2.25rem;
+}
+
+h3 {
+    font-size: 2rem;
+}
+
+h4 {
+    font-size: 1.75rem;
+}
+
+h5 {
+    font-size: 1.5rem;
+}
+
+h6 {
+    font-size: 1.25rem;
+}
+
+p {
+    font-size: 1rem;
+}
+
+@media (min-height: 768px) {
+    html {
+        font-size: 14px;
+    }
+    .site-title {
+        font-size: 18px;
+        color: #ffffff !important;
+    }
+    .title-image {
+        height: 30px;
+    }
+}
+
+@media (min-width: 992px) {
+    html {
+        font-size: 15px;
+    }
+    .site-title {
+        font-size: 35px;
+        color: #ffffff !important;
+    }
+    .title-image {
+        height: 60px;
+    }
+    body {
+        padding-top: 84px;
+    }
+    .sticky-offset {
+        top: 84px;
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 16px;
+    }
+    .site-title {
+        font-size: 35px;
+        color: #ffffff !important;
+    }
+    .title-image {
+        height: 60px;
+    }
+    body {
+        padding-top: 84px;
+    }
+    .sticky-offset {
+        /* top: 77px; */
+        top: 84px;
+    }
 }
