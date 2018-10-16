@@ -212,7 +212,7 @@ function makecheckBoxes() {
     checkBoxContanier.appendChild(text);
     checkBoxContanier.appendChild(document.createElement("br"));
 
-    for (let i = 2013; i < 2018; i++) {
+    for (let i = 2013; i < 2019; i++) {
         input = document.createElement("input");
         input.type = "checkbox";
         input.value = i;
@@ -233,7 +233,7 @@ function makeYearSelector() {
     input.innerHTML = "All";
     checkBoxContanier.appendChild(input);
 
-    for (let i = 2013; i < 2018; i++) {
+    for (let i = 2013; i < 2019; i++) {
         let input = document.createElement("a");
         input.id = i;
         input.innerHTML = i;

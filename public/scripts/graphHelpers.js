@@ -12,7 +12,7 @@ function makeResponsive(svg) {
 
 
     function resize() {
-        var targetWidth = parseInt(container.style("width"));
+        var targetWidth = parseInt(container.style("width")) - 120;
         svg.attr("width", targetWidth);
         svg.attr("height", Math.round(targetWidth / aspectRatio));
     }
