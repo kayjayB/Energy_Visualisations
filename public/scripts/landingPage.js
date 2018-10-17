@@ -14,7 +14,7 @@ let graphNumber = 1;
 
 $(document).ready(function() {
     var metric = 'WITS_13_Jubilee_Road_kVarh';
-
+    document.getElementById("overlay").style.display = "none";
     setUpDashboard();
 
 });

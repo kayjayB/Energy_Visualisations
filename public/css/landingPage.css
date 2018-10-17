@@ -353,7 +353,7 @@ p {
     font-size: 1rem;
 }
 
-@media (min-height: 768px) {
+@media (min-height: 667px) {
     html {
         font-size: 14px;
     }
@@ -363,6 +363,19 @@ p {
     }
     .title-image {
         height: 30px;
+    }
+    #text {
+        position: absolute;
+        height: 500px !important;
+        width: 300px !important;
+        border: 2px solid #c8c7c5;
+        border-radius: 10px;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        background-color: #f8f8f8;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
     }
 }
 
@@ -403,4 +416,32 @@ p {
         /* top: 77px; */
         top: 84px;
     }
+}
+
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000000;
+    cursor: pointer;
+}
+
+#text {
+    position: absolute;
+    height: 500px;
+    width: 450px;
+    border: 5px solid #c8c7c5;
+    border-radius: 10px;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    background-color: #f8f8f8;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
 }
