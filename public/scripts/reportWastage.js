@@ -15,11 +15,11 @@ function openReportOverlay() {
 function report() {
     let notes = document.getElementById("notesBox").value;
     let location = document.getElementById("location").value;
-    document.getElementById("overlay").style.display = "none";
     let alertString = "Your report has been recorded.\n" + "Resource type: " + resourceName + "\nLocation: " + location + "\nDescription: " + notes;
     alert(alertString);
     document.getElementById("notesBox").value = "";
     document.getElementById("location").value = "";
+    document.getElementById("overlay").style.display = "none";
 
 }
 

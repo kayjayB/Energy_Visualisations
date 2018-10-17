@@ -292,9 +292,11 @@ window.onclick = function(event) {
         } else if (graphNumber == 1) {
             if (event.target.parentNode.id.includes('incrementDropdown')) {
                 resolution = event.target.id;
+                console.log(event.target.id)
             }
             if (event.target.parentNode.id.includes('unitsDropdown')) {
                 units = event.target.id;
+                console.log(event.target.id)
             }
             if (event.target.parentNode.id.includes('yearDropdown2')) {
                 console.log(event.target.id)

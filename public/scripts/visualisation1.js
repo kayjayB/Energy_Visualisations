@@ -237,15 +237,16 @@ function increments() {
 }
 
 function submitParameters1() {
-    let graphNumber = 1;
+    //let graphNumber = 1;
     if (requiredDateRange == "2013-2018") {
         end = ('2018/12/31 23:59');
         start = ('2013/01/01 00:00');
     } else {
         start = requiredDateRange.toString() + '/01/01 00:00'; // start of the year
+        console.log("start is 33:", start)
         end = requiredDateRange.toString() + '/12/31 23:59'; //end of the year
     }
-    getMetrics(graphNumber);
+    console.log("start is 2:", start)
 }
 
 function years() {
