@@ -16,10 +16,6 @@ mainRouter.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'views', 'landingPage.html'));
 });
 
-mainRouter.get('/reportWastage', function(req, res) {
-    res.sendFile(path.join(__dirname, 'views', 'reportWastage.html'));
-});
-
 mainRouter.post('/getData', function(req, res) {
     mQuery
         .aggregator('sum')
