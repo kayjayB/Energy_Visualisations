@@ -227,7 +227,6 @@ function makecheckBoxes() {
 function makeYearSelector() {
     let checkBoxContanier = document.getElementById("yearDropdown2");
     checkBoxContanier.className = "dropdown-content"
-    console.log("im doing the thing")
     let input = document.createElement("a");
     input.id = "2013-2018";
     input.innerHTML = "All";

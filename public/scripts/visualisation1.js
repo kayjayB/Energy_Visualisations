@@ -247,6 +247,8 @@ function submitParameters1() {
         end = requiredDateRange.toString() + '/12/31 23:59'; //end of the year
     }
     console.log("start is 2:", start)
+    console.log("graph number is :", graphNumber)
+    getMetrics(graphNumber);
 }
 
 function years() {

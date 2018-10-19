@@ -4,6 +4,7 @@ var resolution = "12h-avg";
 let requiredYears = [];
 
 function submitParameters2() {
+    let counter = 0;
     if (selectedBuilding == "") {
         alert("Please select a building");
         return;
@@ -13,6 +14,7 @@ function submitParameters2() {
     requiredYears = [];
     children.forEach(function(item) {
         if (item.checked == true) {
+            counter = counter + 1;
             if (item.value == 0) {
                 requiredYears.push("2013");
                 requiredYears.push("2014");
@@ -26,6 +28,22 @@ function submitParameters2() {
         }
     });
     hideYearDropdown();
+    if (counter == 0) {
+        requiredYears.push("2013");
+        requiredYears.push("2014");
+        requiredYears.push("2015");
+        requiredYears.push("2016");
+        requiredYears.push("2017");
+        requiredYears.push("2018");
+        let dropdown = document.getElementById("yearDropdown");
+        let children = dropdown.childNodes;
+        children.forEach(function(item) {
+            if (item.value == 0) { // Check the all box
+                item.checked = true;
+            }
+        });
+
+    }
     let startDate = [];
     let endDate = [];
     for (let i = 0; i < requiredYears.length; i++) {
