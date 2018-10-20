@@ -5,4 +5,4 @@
 Access the website [here](https://energy-analytics.azurewebsites.net)
 
 ## Energy Visualisation Demonstration
-![Website demonstration](Documentation/Site_Demo/Demo.pdf)
+![Website demonstration](Documentation/Site_Demo/Demo.png)
