@@ -4,9 +4,14 @@
 
 This repository contains the code base for a resource visualisations website that is hosted as an Azure App service. The website can be accessed [here](https://energy-analytics.azurewebsites.net)
 
+Before running the project, the required packages must be install. To do this run:
+
+`npm install`
+
 To run the project locally run:
 
 `node index`
+The application will be avaliable at [localhost](http://localhost:3000/)
 
 To run this system on a local device, an OpenTSDB database needs to be configured, and the IP address of the database must be used as the host for the OpenTSDB client in `mainRoutes.js`
 
