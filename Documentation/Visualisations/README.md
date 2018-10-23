@@ -23,4 +23,4 @@ This cloud was created using the project report. From the word cloud, the themes
 
 **_The project presents a user-centric approach to creating a visualisation system to look at the university's consumption data_**
   
-![Wordcloud](WordCloud.png")
+![Wordcloud](WordCloud.png)
